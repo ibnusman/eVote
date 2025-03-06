@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import passport from 'passport';
 // import LocalStrategy from 'passport-local'
 import bcrypt from "bcryptjs";
-
+import Signup from './model/signup';
 const port = process.env.PORT;
 const app = express()
 //Set salt round
@@ -23,11 +23,14 @@ app.get('/', function (req, res) {
 //registration page
 app.get('/register', function (req, res) {
 
-  const email = req.body.email;
-  const username = req.body.username;
-  const password = req.body.password;
+  //getting user detials on sign ups
+  const {email,username,password} = req.body;
+
+
+  //hashing password
 const hash = bcrypt.hashSync(password, salt);
-  console.log(`your username is ${username} and password ${hash}`)
+  console.log(`your email is ${email} username is ${username} and password ${hash}`)
+  const newUser = new
   res.send('Registration page')
 
 })

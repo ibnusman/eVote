@@ -1,0 +1,26 @@
+.env
+# Node.js dependencies
+node_modules/
+npm-debug.log
+
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build and cache files
+dist/
+build/
+.cache/
+*.lock
+
+# React/Vite specific
+frontend/node_modules/
+backend/node_modules/
+
+frontend/dist/
+frontend/.vite/
+
+# Mac system files
+.DS_Store
