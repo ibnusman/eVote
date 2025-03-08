@@ -1,5 +1,6 @@
-import express from 'express';
 import 'dotenv/config'
+import express from 'express';
+
 import bodyParser from 'body-parser'
 import passport from 'passport';
 // import LocalStrategy from 'passport-local'

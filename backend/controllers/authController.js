@@ -3,12 +3,19 @@ import bodyParser from 'body-parser'
 import bcrypt from "bcryptjs";
 import db from '../config/db.js'
 import Signup from '../model/Signup.js';
+import AfricasTalking from 'africastalking';
+import SMS_verification from './sms.js';
+
 
 const app = express();
 app.use(bodyParser.json());  
 app.use(bodyParser.urlencoded({ extended: true })); 
-
-
+const credentials = {
+  apiKey:process.env.SMS_apiKey,
+  username: process.env.SMS_username
+}
+const africastalking = AfricasTalking(credentials);
+const sms = africastalking.SMS;
 const userSignup = async (req, res) => {
   try {
     const { fname, sname, email, phone, username, pass } = req.body;
@@ -20,9 +27,14 @@ const userSignup = async (req, res) => {
     // Using create() 
     const newUser = await Signup.create({ fname, sname, email, phone, username, password });
 
-    console.log(newUser);
-    res.status(200).json({ message: "User registered successfully!" });
+    // console.log(newUser);
+   
+    //implimenting SMS OTP
+   await SMS_verification(phone);
 
+    //end of SMS
+    res.status(200).json({ message: "User registered successfully!" });
+   
   } catch (error) {
     if (error.code === 11000) {
         const duplicatedEmail = error.keyValue.email
