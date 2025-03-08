@@ -1,6 +1,6 @@
 import AfricasTalking from 'africastalking';
 import 'dotenv/config';
-import userSignup from './authController.js'
+
 
 // Load credentials from .env
 const credentials = {
@@ -8,7 +8,6 @@ const credentials = {
     username: process.env.SMS_username
 };
 
-// Confirm env variables are loading
 
 const africastalking = AfricasTalking(credentials);
 const sms = africastalking.SMS;

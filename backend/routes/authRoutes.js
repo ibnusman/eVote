@@ -7,5 +7,6 @@ const router = express.Router()
 
 router.post("/register",userSignup);
 
+router.post("/2fa",userSignup);
 
 export default router;
