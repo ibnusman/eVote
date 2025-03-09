@@ -1,5 +1,7 @@
 import AfricasTalking from 'africastalking';
 import 'dotenv/config';
+import { authenticator } from 'otplib';
+
 
 
 // Load credentials from .env
@@ -9,6 +11,12 @@ const credentials = {
 };
 
 
+authenticator.options = { step: 300 }; // OTP expires in 5 minutes
+
+const secret = authenticator.generateSecret();
+const otp = authenticator.generate(secret);
+
+
 const africastalking = AfricasTalking(credentials);
 const sms = africastalking.SMS;
 
@@ -16,7 +24,7 @@ const SMS_verification = async (phoneNumber) => {
     try {
         const options = {
             to: [phoneNumber],
-            message: "Testing SMS ",
+            message: `Your OTP is ${otp} `,
             from: "Surethrift"
             
         };

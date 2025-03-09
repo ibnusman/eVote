@@ -1,7 +1,13 @@
 import nodemailer from 'nodemailer'
 import 'dotenv/config';
+import speakeasy from 'speakeasy'
 
+var secret = speakeasy.generateSecret({length: 20});
 
+var token = speakeasy.totp({
+  secret: secret.base32,
+  encoding: 'base32'
+});
 
 let transporter = nodemailer.createTransport({
   service: 'gmail', 
@@ -16,7 +22,7 @@ const sendEmail = async (to) => {
         from:process.env.EMAIL_USER,
         to,
         subject:'Your code is',
-        text:`Your OTp is `
+        text:`Your OTp is ${token}`
     };
 
     try{

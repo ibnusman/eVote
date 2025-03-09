@@ -48,5 +48,17 @@ const userSignup = async (req, res) => {
   }
 };
 
+const emailVerification = async (res,req) =>{
+const {phoneOTP,emailOTP} = req.body;
+try{
+
+}catch(error){
+  
+}
+
+
+
+}
+
 
 export default userSignup;
