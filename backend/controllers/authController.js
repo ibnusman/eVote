@@ -6,7 +6,7 @@ import Signup from '../model/Signup.js';
 import AfricasTalking from 'africastalking';
 import SMS_verification from './sms.js';
 import sendEmail from './email.js';
-
+import Otp from '../model/Otp.js';
 
 const app = express();
 app.use(bodyParser.json());  
@@ -48,12 +48,29 @@ const userSignup = async (req, res) => {
   }
 };
 
-const emailVerification = async (res,req) =>{
-const {phoneOTP,emailOTP} = req.body;
+export const otpVerification = async (req,res) =>{
+
 try{
+const { smsOTP, emailOTP } = req.body;
+//checking user OTP with whats sent 
+  const [checkSMSOtp, checkEmailOtp] = await Promise.all([
+    Otp.findOne({ smsOTP: smsOTP.trim() }),
+    Otp.findOne({ emailOTP: emailOTP.trim() })
+  ]);
+
+   console.log(checkSMSOtp,checkEmailOtp);
+   if(checkSMSOtp && checkEmailOtp)
+   {
+    res.status(200).json({message:"OTP verified successfully"})
+   }
+   else{
+    res.status(400).json({message:"Invalid OTP"})
+   }
+  
 
 }catch(error){
-  
+ console.error("Error during OTP verification:", error.message);  
+    res.status(500).json({ message: "An error occurred during OTP verification" });
 }
 
 
