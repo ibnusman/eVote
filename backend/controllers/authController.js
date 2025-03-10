@@ -77,5 +77,38 @@ const { smsOTP, emailOTP } = req.body;
 
 }
 
+export const login = async (req,res) =>{
+
+const {email, password} = req.body;
+try {
+
+
+
+const user = await Signup.findOne({email:email})
+
+
+ const isValidPassowrd = await bcrypt.compare(password, user.password);
+// console.log(isValidPassowrd)
+
+if (!user){
+  res.status(400).json({message:"User not found"});
+}
+
+if(isValidPassowrd)
+{
+ res.status(200).json({message:"login Succfully "})
+}
+else{
+  res.status(400).json({message:"Invalid password"});
+}
+
+
+
+} catch (error) {
+  res.status(500).json({message:"Server Error",error})
+}
+
+}
+
 
 export default userSignup;
