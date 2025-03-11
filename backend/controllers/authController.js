@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 
-
+//User Signup
 const userSignup = async (req, res) => {
   try {
     //Getting user input
@@ -48,6 +48,7 @@ const userSignup = async (req, res) => {
   }
 };
 
+//Checking OTP
 export const otpVerification = async (req,res) =>{
 
 try{
@@ -77,12 +78,11 @@ const { smsOTP, emailOTP } = req.body;
 
 }
 
+//Login 
 export const login = async (req,res) =>{
 
 const {email, password} = req.body;
 try {
-
-
 
 const user = await Signup.findOne({email:email})
 
@@ -102,13 +102,49 @@ else{
   res.status(400).json({message:"Invalid password"});
 }
 
-
-
 } catch (error) {
   res.status(500).json({message:"Server Error",error})
 }
 
 }
 
+//Forget Password
+
+export const forgetPassword = async (req, res)=>{
+  const {email,otp} = req.body;
+try{
+  const checkEmail = await Signup.findOne({email:email})
+  if (!checkEmail){
+    res.status(400).json({message:"Email does not exist"})
+
+  }
+   if (checkEmail){
+    res.status(200).json({message:"Email valid"})
+     await sendEmail(email)
+
+     await otpVerification()
+
+  }
+}catch(error){
+  console.error("Error validating Email",error)
+}
+}
+
+export const changePassword = async (req,res) =>{
+  const {email,pass} = req.body;
+
+  try {
+    const getEmail = await Signup.findOne({email});
+        console.log(getEmail)
+      const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(pass, salt);
+    getEmail.password = password;
+    await getEmail.save();
+    res.status(200).json({message:"Password updated Succcessfully"})
+    
+  } catch (error) {
+    console.error(500).json({message:"Error updating password", error})
+  }
+}
 
 export default userSignup;
