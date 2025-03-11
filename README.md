@@ -1,8 +1,7 @@
 # eVote
 # eVote - Backend API
 
-This repository contains the backend implementation of **eVote**, a secure user authentication and password reset system built using Node.js, Express, MongoDB, and bcrypt. The project focuses on OTP-based verification for password recovery and user login.
-
+This repository contains the backend implementation of **eVote**, built using Node.js, Express, MongoDB, and bcrypt. 
 ## 📌 Features
 - User registration & login with password hashing (bcrypt)
 - OTP generation & verification for password reset (2FA)
@@ -11,7 +10,7 @@ This repository contains the backend implementation of **eVote**, a secure user 
 - Secure password storage
 - Email delivery of OTPs using `nodemailer`
 
-## 📂 Project Structure
+
 Install dependencies:
 bash
 Copy
