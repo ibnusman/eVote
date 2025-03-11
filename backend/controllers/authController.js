@@ -129,7 +129,7 @@ try{
   console.error("Error validating Email",error)
 }
 }
-
+//changing password
 export const changePassword = async (req,res) =>{
   const {email,pass} = req.body;
 
@@ -143,7 +143,8 @@ export const changePassword = async (req,res) =>{
     res.status(200).json({message:"Password updated Succcessfully"})
     
   } catch (error) {
-    console.error(500).json({message:"Error updating password", error})
+     console.error("Error updating password:", error);
+    res.status(500).json({ message: "Error updating password", error });
   }
 }
 
