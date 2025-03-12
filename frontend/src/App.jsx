@@ -12,7 +12,7 @@ function App() {
     <>
       
        
-      <Signup/>
+      {/* <Signup/> */}
       <Login/>
     </>
   )
