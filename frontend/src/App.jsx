@@ -5,6 +5,7 @@ import './App.css'
 import { Login } from './components/Login'
 import { Signup } from './components/Signup'
 import { TwoFA } from './components/TwoFA.JSX'
+import { ForgetPassword } from './components/ForgetPassword'
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
        
       {/* <Signup/> */}
 {/* <TwoFA/> */}
-      <Login/>
+      {/* <Login/> */}
+      <ForgetPassword/>
     </>
   )
 }
