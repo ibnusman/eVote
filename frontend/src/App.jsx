@@ -13,8 +13,8 @@ function App() {
       
        
       {/* <Signup/> */}
-<TwoFA/>
-      {/* <Login/> */}
+{/* <TwoFA/> */}
+      <Login/>
     </>
   )
 }
