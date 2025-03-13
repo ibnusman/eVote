@@ -38,7 +38,7 @@ export function Login() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                     />
                 </div>
 
@@ -49,7 +49,7 @@ export function Login() {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                     />
                 </div>
 
