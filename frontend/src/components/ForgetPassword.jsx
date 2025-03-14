@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export function ForgetPassword() {
     const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleChange = (e) => {
         setEmail(e.target.value); // Directly update the email state
@@ -11,14 +11,27 @@ export function ForgetPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Clear previous errors before making a request
+        setMessage(""); // Clear previous errors before making a request
 
         try {
             const response = await axios.post('http://localhost:3000/api/auth/forgetPassword', { email }); // Pass email as an object
             console.log(response.data);
+            if(response.status===200)
+            {
+                setMessage(response.data.message)
+            }
         } catch (error) {
-            console.error(error);
-            setError("Invalid email");
+            if(error.response)
+            {
+                setMessage(error.response.data.message)
+            }
+            else
+            {
+            setMessage("Server Error. Please try again later.");
+
+            }
+           
+           
         }
     };
 
@@ -34,7 +47,7 @@ export function ForgetPassword() {
                         onChange={handleChange}
                         className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                     />
-                    {error && <div className="text-red-500 mt-2">{error}</div>}
+                    {message && <div className="text-red-500 mt-2">{message}</div>}
                 </div>
 
                 <button 

@@ -6,6 +6,7 @@ import { Login } from './components/Login'
 import { Signup } from './components/Signup'
 import { TwoFA } from './components/TwoFA.JSX'
 import { ForgetPassword } from './components/ForgetPassword'
+import { ChangePassword } from './components/ChangePassword'
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
       {/* <Signup/> */}
 {/* <TwoFA/> */}
       {/* <Login/> */}
-      <ForgetPassword/>
+      {/* <ForgetPassword/> */}
+      <ChangePassword/>
     </>
   )
 }

@@ -8,6 +8,7 @@ export function  TwoFA () {
         smsOTP: "",
         emailOTP: ""
     })
+    const [message,setMessage] = useState("")
                             
     const handleChange = (e) => { 
         const {name,value} = e.target;
@@ -20,6 +21,10 @@ export function  TwoFA () {
 
           try {
             const response = await axios.post("http://localhost:3000/api/auth/2fa",formData)
+            if(response.status === 200)
+            {
+                    setMessage(response.data.message)
+            }
             console.log(response.data);
           } catch (error) {
             console.log(" Error Verifying OTP",error.data)
