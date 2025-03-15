@@ -7,18 +7,21 @@ import { Signup } from './components/Signup'
 import { TwoFA } from './components/TwoFA.JSX'
 import { ForgetPassword } from './components/ForgetPassword'
 import { ChangePassword } from './components/ChangePassword'
+import { BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import { Navbar } from './components/Navbar'
+
 
 function App() {
 
   return (
     <>
       
-       
+       <Navbar/>
       {/* <Signup/> */}
 {/* <TwoFA/> */}
       {/* <Login/> */}
       {/* <ForgetPassword/> */}
-      <ChangePassword/>
+      {/* <ChangePassword/> */}
     </>
   )
 }

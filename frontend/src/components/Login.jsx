@@ -8,7 +8,7 @@ export function Login() {
     });
     const [message,setMessage] = useState("");
 
-    const [error, setError] = useState(null);  // State for storing error messages
+   // State for storing error messages
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,7 +17,7 @@ export function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null);  // Clear previous errors before making a request
+        setMessage(null);  // Clear previous errors before making a request
 
         try {
             const response = await axios.post('http://localhost:3000/api/auth/login', formData);
@@ -33,7 +33,7 @@ export function Login() {
                 setMessage(error.response.data.message);
             }else{
             console.error(error);
-            setError("Server Error. Please try again");
+            setMessage("Server Error. Please try again");
             }
         }
     };
