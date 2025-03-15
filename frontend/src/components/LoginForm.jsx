@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export function Login() {
+export function LoginForm() {
     const [formData, setFormData] = useState({
         email: "",
         password: ""

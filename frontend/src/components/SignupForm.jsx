@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
-export function Signup() {
+export function SignupForm() {
     const [formData, setFormData] = useState({
         fname: "",
         sname: "",
@@ -103,7 +103,7 @@ export function Signup() {
 
                 <button 
                     type="submit"
-                    className="w-full bg-red-500 text-red py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+className="w-full bg-green-100 text-blue-500 py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
                 >
                     Sign Up
                 </button>

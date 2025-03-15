@@ -2,21 +2,33 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Login } from './components/Login'
-import { Signup } from './components/Signup'
-import { TwoFA } from './components/TwoFA.JSX'
-import { ForgetPassword } from './components/ForgetPassword'
-import { ChangePassword } from './components/ChangePassword'
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import { Navbar } from './components/Navbar'
+import Landing from './pages/Landing'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
+import { LoginForm } from './components/LoginForm'
+import { SignupForm } from './components/SignupForm'
 
 
 function App() {
 
   return (
     <>
-      
-       <Navbar/>
+      {/* <SignupForm/> */}
+<BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Landing/>}/>
+      <Route path='/login' element={<LoginForm/>}/>
+      <Route path='/register' element={<SignupForm/>}/>
+    </Routes>
+
+</BrowserRouter>
+
+
+
+       {/* <Navbar/> */}
+       {/* <Landing/> */}
       {/* <Signup/> */}
 {/* <TwoFA/> */}
       {/* <Login/> */}
