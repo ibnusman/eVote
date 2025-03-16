@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom'
+
 
 export function LoginForm() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -20,13 +23,14 @@ export function LoginForm() {
         setMessage(null);  // Clear previous errors before making a request
 
         try {
+            
             const response = await axios.post('http://localhost:3000/api/auth/login', formData);
             if(response.status === 200)
             {
                 setMessage(response.data.message)
             }
             console.log(response.data);
-            // Redirect user or save token here if login is successful
+                navigate('/dashboard')
         } catch (error) {
             if(error.response)
             {

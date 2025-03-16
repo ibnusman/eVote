@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import ForgetPassword from './pages/ForgetPassword'
 import VerifyUser from './pages/Verifyuser'
 import ChangePassword from './pages/ChangePassword'
+import Dashboard from './pages/Dashboard'
 
 
 
@@ -25,6 +26,7 @@ function App() {
       <Route path='/forgetpassword' element={<ForgetPassword/>}/>
       <Route path='/vu' element={<VerifyUser/>}/>
       <Route path='/changepassword' element={<ChangePassword/>}/>
+      <Route path='/dashboard' element={<Dashboard/>}/>
       
     </Routes>
 
