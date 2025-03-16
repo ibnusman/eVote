@@ -1,11 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 
-export function ChangePassword() {
+export function ChangePasswordForm() {
+    const navigate = useNavigate();
     const [formData,setFormData] = useState({
         email: "",
-        password: ""
+        pass: ""
     });
     const [message,setMessage] = useState("");
 
@@ -21,7 +23,13 @@ export function ChangePassword() {
      try {
         const response = await axios.post("http://localhost:3000/api/auth/changePassword",formData)
         if(response.status === 200){
-            setMessage(response.data.message)
+            setMessage(" Password Changed succsfully  Redirecting to login...")
+
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
+
+            
         }
         
      } catch (error) {
@@ -54,8 +62,8 @@ export function ChangePassword() {
                     <label className="block text-sm font-medium text-gray-700">Password</label>
                     <input 
                         type="password"
-                        name="password"
-                        value={formData.password}
+                        name="pass"
+                        value={formData.pass}
                         onChange={handleChange}
     className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                     />
@@ -65,7 +73,7 @@ export function ChangePassword() {
 
                 <button 
                     type="submit"
-                    className="w-full bg-red-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                    className="w-full bg-red-500 text-black py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
                 >
                     Change Password
                 </button>

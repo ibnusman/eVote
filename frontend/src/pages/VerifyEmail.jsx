@@ -6,6 +6,7 @@ function Verify() {
     <div>
 
         <TwoFAForm/>
+        
     </div>
   )
 }

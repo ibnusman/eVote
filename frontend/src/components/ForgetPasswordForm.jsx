@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 
 export function ForgetPasswordForm() {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
@@ -18,6 +21,7 @@ export function ForgetPasswordForm() {
             console.log(response.data);
             if(response.status===200)
             {
+                navigate('/vu') 
                 setMessage(response.data.message)
             }
         } catch (error) {

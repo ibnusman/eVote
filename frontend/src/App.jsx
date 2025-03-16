@@ -6,6 +6,9 @@ import Landing from './pages/Landing'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import ForgetPassword from './pages/ForgetPassword'
+import VerifyUser from './pages/Verifyuser'
+import ChangePassword from './pages/ChangePassword'
+
 
 
 
@@ -20,6 +23,8 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Signup/>}/>
       <Route path='/forgetpassword' element={<ForgetPassword/>}/>
+      <Route path='/vu' element={<VerifyUser/>}/>
+      <Route path='/changepassword' element={<ChangePassword/>}/>
       
     </Routes>
 
