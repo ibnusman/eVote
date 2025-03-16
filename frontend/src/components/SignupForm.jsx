@@ -103,7 +103,7 @@ export function SignupForm() {
 
                 <button 
                     type="submit"
-className="w-full bg-green-100 text-blue-500 py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+          className="block w-80 text-center bg-green-500 text-black py-3 px-6 rounded-xl hover:bg-green-600 transition"
                 >
                     Sign Up
                 </button>

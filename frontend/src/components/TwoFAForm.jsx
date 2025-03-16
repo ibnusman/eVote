@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 
 
-export function  TwoFA () {
+export function  TwoFAForm () {
     const [formData,setFormData] = useState({
         smsOTP: "",
         emailOTP: ""

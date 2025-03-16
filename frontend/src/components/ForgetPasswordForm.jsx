@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export function ForgetPassword() {
+export function ForgetPasswordForm() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
@@ -52,7 +52,7 @@ export function ForgetPassword() {
 
                 <button 
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                    className="w-full bg-blue-500 text-black py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors"
                 >
                     Submit
                 </button>

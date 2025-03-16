@@ -1,13 +1,17 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { SignupForm } from "../components/SignupForm";
-
 
 function Signup() {
   return (
-    <div>
+    <div className="flex flex-col items-center mt-6">
        <SignupForm/>
-       <p>Already have an account ? <Link to='login'>Login</Link></p>
+       <p className="mt-4 text-gray-700 text-sm">
+         Already have an account?{" "}
+         <Link to='/login' className="text-blue-500 hover:underline">
+           Login
+         </Link>
+       </p>
     </div>
   )
 }
