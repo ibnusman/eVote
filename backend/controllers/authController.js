@@ -2,11 +2,12 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import bcrypt from "bcryptjs";
 import db from '../config/db.js'
-import Signup from '../model/Signup.js';
+import User from '../model/User.js';
 import AfricasTalking from 'africastalking';
 import SMS_verification from './sms.js';
 import sendEmail from './email.js';
 import Otp from '../model/Otp.js';
+
 
 const app = express();
 app.use(bodyParser.json());  
@@ -25,7 +26,7 @@ const userSignup = async (req, res) => {
     const password = await bcrypt.hash(pass, salt);
 
     // Add detials to DB
-    const newUser = await Signup.create({ fname, sname, email, phone, username, password });
+    const newUser = await User.create({ fname, sname, email, phone, username, password });
 
     // console.log(newUser);
    
@@ -49,18 +50,45 @@ const userSignup = async (req, res) => {
 };
 
 //Checking OTP
+// export const otpVerification = async (req,res) =>{
+
+// try{
+// const { smsOTP, emailOTP } = req.body;
+// //checking user OTP with whats sent 
+//   const [checkSMSOtp, checkEmailOtp] = await Promise.all([
+//     Otp.findOne({ smsOTP: smsOTP.trim() }),
+//     Otp.findOne({ emailOTP: emailOTP.trim() })
+//   ]);
+
+//    console.log(checkSMSOtp,checkEmailOtp);
+//    if(checkSMSOtp && checkEmailOtp)
+//    {
+//     res.status(200).json({message:"OTP verified successfully"})
+//    }
+//    else{
+//     res.status(400).json({message:"Invalid OTP"})
+//    }
+  
+
+// }catch(error){
+//  console.error("Error during OTP verification:", error.message);  
+//     res.status(500).json({ message: "An error occurred during OTP verification" });
+// }
+
+
+
+// }
+
+//Setting Email only
 export const otpVerification = async (req,res) =>{
 
 try{
-const { smsOTP, emailOTP } = req.body;
+const {emailOTP } = req.body;
 //checking user OTP with whats sent 
-  const [checkSMSOtp, checkEmailOtp] = await Promise.all([
-    Otp.findOne({ smsOTP: smsOTP.trim() }),
-    Otp.findOne({ emailOTP: emailOTP.trim() })
-  ]);
+  const checkEmailOtp = await Otp.findOne({ emailOTP: emailOTP });
 
-   console.log(checkSMSOtp,checkEmailOtp);
-   if(checkSMSOtp && checkEmailOtp)
+   console.log(checkEmailOtp);
+   if(checkEmailOtp)
    {
     res.status(200).json({message:"OTP verified successfully"})
    }
@@ -78,13 +106,14 @@ const { smsOTP, emailOTP } = req.body;
 
 }
 
+
 //Login 
 export const login = async (req,res) =>{
 
 const {email, password} = req.body;
 try {
 
-const user = await Signup.findOne({email:email})
+const user = await User.findOne({email:email})
 
 
  const isValidPassowrd = await bcrypt.compare(password, user.password);
@@ -111,9 +140,9 @@ else{
 //Forget Password
 
 export const forgetPassword = async (req, res)=>{
-  const {email,otp} = req.body;
+  const {email} = req.body;
 try{
-  const checkEmail = await Signup.findOne({email:email})
+  const checkEmail = await User.findOne({email:email})
   if (!checkEmail){
     res.status(400).json({message:"Email does not exist"})
 
@@ -121,7 +150,7 @@ try{
    if (checkEmail){
     res.status(200).json({message:"Email valid"})
      await sendEmail(email)
-
+    
      await otpVerification()
 
   }
@@ -134,7 +163,7 @@ export const changePassword = async (req,res) =>{
   const {email,pass} = req.body;
 
   try {
-    const getEmail = await Signup.findOne({email});
+    const getEmail = await User.findOne({email});
         console.log(getEmail)
       const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(pass, salt);
