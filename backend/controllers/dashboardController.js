@@ -7,4 +7,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-const Crea
+export const createElection = async (req,res) =>{
+    const {position,category,description,startDate,endDate} = req.body;
+
+    try {
+        
+    } catch (error) {
+        
+    }
+}
