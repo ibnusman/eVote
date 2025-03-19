@@ -32,21 +32,10 @@ export const createElection = async (req,res) =>{
 export const viewElection = async (req,res) =>{
 
     try{
-    const storedElection = await Election.find();
-//    console.log(storedElection[1])
-const selectedlction =  storedElection.forEach(function(elc){
-    const testing = [{
-        position:elc.position,
-        category:elc.category,
-        description:elc.description,
-        startDate:elc.startDate,
-        endDate:elc.endDate,
+    const storedElection = await Election.find({},{_id:0,position:1,category:1,description:1,startDate:1,endDate:1});
 
-    }]
-   res.status(201).json({message:`${selectedlction}`})
-});
 
-    // res.status(200).json({storedElection});
+    res.status(200).json({storedElection});
     } catch(error){
         console.log(error);
     }
