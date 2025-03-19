@@ -18,13 +18,36 @@ export const createElection = async (req,res) =>{
             return res.status(400).json({message:"Invalid date formart use Y-M-D"})
         }
 
-      const el =  await Election.create({position,category,description,startDate,endDate})
+      const addElection =  await Election.create({position,category,description,startDate,endDate})
         
-        res.status(201).json({message:"Election Created successfully"});
-        console.log(el)
+        res.status(201).json({message:"Election created successfully"});
+        console.log(addElection)
     } catch (error) {
         res.status(400).json({message: `error Creating election ${error.message}`})
         console.log(error)
         
+    }
+}
+
+export const viewElection = async (req,res) =>{
+
+    try{
+    const storedElection = await Election.find();
+//    console.log(storedElection[1])
+const selectedlction =  storedElection.forEach(function(elc){
+    const testing = [{
+        position:elc.position,
+        category:elc.category,
+        description:elc.description,
+        startDate:elc.startDate,
+        endDate:elc.endDate,
+
+    }]
+   res.status(201).json({message:`${selectedlction}`})
+});
+
+    // res.status(200).json({storedElection});
+    } catch(error){
+        console.log(error);
     }
 }

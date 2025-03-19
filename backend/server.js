@@ -9,6 +9,7 @@ import User from './model/User.js';
 import mongoose from 'mongoose';
 import db from './config/db.js'
 import authRoutes from './routes/authRoutes.js'; 
+import dashboardRoutes from './routes/dashboardRoutes.js'; 
 
 
 const port = process.env.PORT;
@@ -34,6 +35,8 @@ app.get('/', function (req, res) {
 })
 
 app.use("/api/auth",authRoutes);
+
+app.use("/api/dashboard",dashboardRoutes);
 
 
 app.listen(port,() =>{

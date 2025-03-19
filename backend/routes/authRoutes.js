@@ -12,11 +12,10 @@ const app = express();
 const router = express.Router()
 
 router.post("/register",userSignup);
-
 router.post("/2fa",otpVerification);
 router.post("/login", login)
 router.post("/forgetPassword",forgetPassword)
 router.post("/changePassword", changePassword)
-router.post("/createElection", createElection)
+
 
 export default router;
