@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User } from 'lucide-react';
 import { AddElection } from '../components/AddElection';
+import { ViewElection } from '../components/ViewElection';
 
 function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
@@ -43,7 +44,7 @@ function Dashboard() {
         <section className="w-full">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Your Elections</h2>
           <div className="bg-white p-6 rounded-lg shadow-md w-full">
-            <p className="text-gray-500">No elections yet. Add one above!</p>
+            <p className="text-gray-500">No elections yet. Add one above!  </p> <ViewElection/>
           </div>
         </section>
       </main>
