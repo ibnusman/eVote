@@ -9,6 +9,8 @@ import ForgetPassword from './pages/ForgetPassword'
 import VerifyUser from './pages/Verifyuser'
 import ChangePassword from './pages/ChangePassword'
 import Dashboard from './pages/Dashboard'
+import AddCandidate from './pages/AddCandidate'
+
 
 
 
@@ -27,6 +29,7 @@ function App() {
       <Route path='/vu' element={<VerifyUser/>}/>
       <Route path='/changepassword' element={<ChangePassword/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/dashboard/addcandidate' element={<AddCandidate/>}/>
       
     </Routes>
 
