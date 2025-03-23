@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Plus, X } from "lucide-react";
 
 export const AddCandidateForm = ({ electionId }) => {
   const [formData, setFormData] = useState({
@@ -9,9 +10,9 @@ export const AddCandidateForm = ({ electionId }) => {
     image: "",
     electionId: electionId, // Passed from parent (e.g., /election/123/candidates)
   });
-
+ const [add, setAdd] = useState(false);
   const [message, setMessage] = useState("");
-
+ const handleClick = () => setAdd(!add);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -48,8 +49,16 @@ export const AddCandidateForm = ({ electionId }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Add Candidate</h3>
+    <div className="w-full">
+      <button
+        onClick={handleClick}
+        className="flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
+      >
+        {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
+        {add ? "Close" : "Add Election"}
+      </button>
+
+      {add && (
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Message */}
         {message && (
@@ -134,7 +143,7 @@ export const AddCandidateForm = ({ electionId }) => {
         >
           Add Candidate
         </button>
-      </form>
+      </form>)}
     </div>
   );
 };
