@@ -2,6 +2,7 @@ import React from "react";
 import Dashboard from "./Dashboard";
 import { AddCandidateForm } from "../components/AddCandidateForm";
 import Header from "../components/Header";
+import { Candidates } from "../components/Candidates";
 
 
 function AddCandidate (){
@@ -23,7 +24,7 @@ function AddCandidate (){
             <section className="w-full">
               <h2 className="text-xl font-semibold text-gray-700 mb-4">Candidates</h2>
               <div className="bg-white p-6 rounded-lg shadow-md w-full">
-               
+               <Candidates/>
               </div>
             </section>
           </main>

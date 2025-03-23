@@ -10,6 +10,7 @@ import VerifyUser from './pages/Verifyuser'
 import ChangePassword from './pages/ChangePassword'
 import Dashboard from './pages/Dashboard'
 import AddCandidate from './pages/AddCandidate'
+import { Candidates } from './components/Candidates'
 
 
 
@@ -30,6 +31,7 @@ function App() {
       <Route path='/changepassword' element={<ChangePassword/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/addcandidate' element={<AddCandidate/>}/>
+      {/* <Route path='/dashboard/candidates' element={<Candidates/>}/> */}
       
     </Routes>
 
