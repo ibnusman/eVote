@@ -1,11 +1,13 @@
 import axios from "axios";
-import { interval } from "date-fns";
+
 import React,{useState,useEffect} from "react";
+import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 
 
 export function Candidates (){
     const [candidates,setCandidates] = useState([])
+    const [vote,setVote] = useState(0)
 
         
         useEffect(() => {
@@ -21,12 +23,19 @@ export function Candidates (){
         }
         getCandidates()
 
-        const Interval = setInterval(getCandidates,1000);
-        return ()=>clearInterval(Interval);
+        // const Interval = setInterval(getCandidates,1000);
+        // return ()=>clearInterval(Interval);
         
-        }, [candidates])
+        }, [])
         
-       
+       const handleClick = ()=>{
+           setVote((prev)=>{
+            const newVote = prev +1 
+            console.log(newVote);
+            return newVote;
+       });
+          
+       }
         
 
         
@@ -53,6 +62,12 @@ export function Candidates (){
               <p className="text-gray-500 text-sm text-center mt-2">
                 {candi.about || "No description available"}
               </p>
+              <button
+                onClick={handleClick}
+                className="mt-3 flex items-center gap-2 bg-green-500 text-black px-4 py-2 rounded-lg border border-green-600 hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <FaVoteYea /> Vote
+              </button>
             </div>
           ))}
         </div>
