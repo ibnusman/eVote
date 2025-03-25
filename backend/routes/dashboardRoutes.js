@@ -1,5 +1,5 @@
 import express from 'express'
-import { viewElection,createElection, addCandidate, viewCandidates, votes } from '../controllers/dashboardController.js';
+import { viewElection,createElection, addCandidate, viewCandidates, votes, voteResult } from '../controllers/dashboardController.js';
 
 const app = express();
 
@@ -9,7 +9,11 @@ router.get('/electionList',viewElection);
 
 router.post('/addcandidate',addCandidate);
 router.get('/candidatelist',viewCandidates);
-router.post('/candidatelist',votes);
+
+//votes
+router.post('/vote',votes);
+
+router.get('/result',voteResult);
 
 
 export default router;
