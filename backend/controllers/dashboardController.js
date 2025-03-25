@@ -108,9 +108,9 @@ export const voteResult = async (req,res) =>{
 
     try {
         const electionResult = await Candidate.find({});
-        res.status(200).json({message:"Votes fatched succsfully"});
+        res.status(200).json({message:electionResult});
 
-console.log(electionResult);
+// console.log(electionResult);
     } catch (error) {
         console.error("Server error ",error);
         res.status(500).json({message:"Error fatching votes"});
