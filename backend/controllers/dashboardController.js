@@ -81,12 +81,24 @@ export const viewCandidates = async (req,res)=>{
 export const votes = async(req,res) =>{
 
     const{_id,votes} = req.body;
-try {
-     const newVote = await Candidate.findOneAndUpdate({"_id":_id},{$inc:{votes:votes}});
 
-    console.log(newVote);
+    if(!_id || votes === undefined){
+       return res.status(400).json({message:"Candidate ID and votes required"})
+    }
+    if(typeof votes !=="number" || votes <0)
+    {
+        return res.status(400).json({message:"Votes has to be a positve number"})
+    }
+try {
+     const newVote = await Candidate.findOneAndUpdate({"_id":_id},{$inc:{votes:votes}},{new:true});
+     if(!newVote){
+        return res.status(404).json({message:"Candidate not found"});
+     }
+    res.status(200).json({message:"Voted Added succesfully",newVote})
+    
 } catch (error) {
-    console.log(error);
+   console.error("Server Error",error)
+   res.status(500).json({message:"Error Adding votes"})
 }
    
 
