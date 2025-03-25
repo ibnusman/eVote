@@ -42,7 +42,7 @@ export const viewElection = async (req, res) => {
     }
 };
 
-
+//adding candidates
 export const addCandidate = async (req,res) =>{
     const {name,party,about,image} = req.body;
        if(!name){
@@ -56,5 +56,39 @@ export const addCandidate = async (req,res) =>{
         res.status(500).json({message:"Error adding candidate"})
         
     }
+
+}
+
+
+export const viewCandidates = async (req,res)=>{
+
+    try {
+         const candidateList = await Candidate.find({});
+         if(candidateList.length === 0)
+         {
+            return res.status(404).json({message:"No recored found"});
+         }
+    // console.log(candidateList);
+    res.status(200).json({candidateList})
+    } catch (error) {
+        console.error("Server error",error);
+        res.status(500).json({message:"Error connectiing to server"});
+        
+    }
+   
+}
+
+export const votes = async(req,res) =>{
+
+    const{_id,votes} = req.body;
+try {
+     const newVote = await Candidate.findOneAndUpdate({"_id":_id},{$inc:{votes:votes}});
+
+    console.log(newVote);
+} catch (error) {
+    console.log(error);
+}
+   
+
 
 }
