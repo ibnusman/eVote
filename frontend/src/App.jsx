@@ -33,7 +33,7 @@ function App() {
       <Route path='/vu' element={<VerifyUser/>}/>
       <Route path='/changepassword' element={<ChangePassword/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
-      <Route path='/dashboard/addcandidate' element={<AddCandidate/>}/>
+      <Route path='/dashboard/candidates' element={<AddCandidate/>}/>
       <Route path='/dashboard/result' element={<ElectionResult/>}/>
       <Route path='/dashboard/down' element={<Download/>}/>
       {/* <Route path='/dashboard/candidates' element={<Candidates/>}/> */}

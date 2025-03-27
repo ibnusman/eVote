@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns"; // Import format function
+import { Link } from "react-router";
 
 export const ViewElection = () => {
   const [elections, setElections] = useState([]);
@@ -27,6 +28,7 @@ export const ViewElection = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {elections.map((election, index) => (
+            <Link to ='/dashboard/addcandidate' >
             <div
               key={index}
               className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
@@ -40,6 +42,8 @@ export const ViewElection = () => {
                 <span>End: {format(new Date(election.endDate), "MMMM d, yyyy")}</span>
               </div>
             </div>
+            </Link>
+
           ))}
         </div>
       )}

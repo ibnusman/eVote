@@ -66,7 +66,7 @@ export function ElectionResult() {
     <div className="w-full">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Election Results</h2>
       <button
-        className="w-full bg-blue-500 text-black p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
+        className="w-full bg-blue-500 text-blac p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
         onClick={testDownload}
       >
         Download Election Results as PDF

@@ -23,14 +23,14 @@ function AddCandidate (){
     
             {/* Placeholder for Election List */}
             <section className="w-full">
-              <h2 className="text-xl font-semibold text-gray-700 mb-4">Candidates</h2>
+              {/* <h2 className="text-xl font-semibold text-gray-700 mb-4">Candidates</h2> */}
               <div className="bg-white p-6 rounded-lg shadow-md w-full">
                <Candidates/>
               </div>
             </section>
              {/* Election Results */}
          <section className="w-full">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Election Results</h2>
+          {/* <h2 className="text-xl font-semibold text-gray-700 mb-4">Election Results</h2> */}
           <div className="bg-white p-6 rounded-lg shadow-md w-full">
             <ElectionResult/>
           </div>

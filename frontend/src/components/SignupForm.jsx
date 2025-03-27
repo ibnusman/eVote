@@ -28,7 +28,7 @@ export function SignupForm() {
                 headers: { 'Content-Type': 'application/json' }
             });
             console.log(response.data);
-            setMessage(`${response.data.message} Loading login page...`);
+            setMessage(`${response.data.message}`);
             setTimeout(() => {
                 navigate('/login')
             }, 3000);
@@ -49,7 +49,10 @@ export function SignupForm() {
     return (
         <>
             <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-xl rounded-2xl space-y-6 mt-10"> 
+
                 <div>
+                     {message && <div className="text-green-500">{message}</div>}
+
                     <label className="block text-sm font-medium text-gray-700">First Name</label>
                     <input 
                         type="text"
@@ -114,8 +117,7 @@ export function SignupForm() {
                         className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-             {message && <div className="text-red-500">{message}</div>}
-
+            
                 <button 
                     type="submit"
           className="block w-80 text-center bg-green-500 text-black py-3 px-6 rounded-xl hover:bg-green-600 transition"

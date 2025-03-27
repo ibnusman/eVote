@@ -50,7 +50,7 @@ export const AddElection = () => {
     <div className="w-full">
       <button
         onClick={handleClick}
-        className="flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
+        className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
       >
         {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
         {add ? "Close" : "Add Election"}
@@ -147,7 +147,7 @@ export const AddElection = () => {
 
           <button
             type="submit"
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all"
+            className="mt-4 bg-blue-500 text-black py-2 px-4 rounded-lg hover:bg-blue-600 transition-all"
           >
             Submit Election
           </button>

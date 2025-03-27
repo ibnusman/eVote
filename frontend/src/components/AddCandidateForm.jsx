@@ -52,10 +52,10 @@ export const AddCandidateForm = ({ electionId }) => {
     <div className="w-full">
       <button
         onClick={handleClick}
-        className="flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
+        className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
       >
         {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
-        {add ? "Close" : "Add Election"}
+        {add ? "Close" : "Add Candidate"}
       </button>
 
       {add && (
@@ -139,7 +139,7 @@ export const AddCandidateForm = ({ electionId }) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
+          className="w-full bg-blue-500 text-black p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
           disabled={!formData.name} // Disable if name is empty
         >
           Add Candidate
