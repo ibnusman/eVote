@@ -12,6 +12,8 @@ import Dashboard from './pages/Dashboard'
 import AddCandidate from './pages/AddCandidate'
 import { Candidates } from './components/Candidates'
 import ElectionResult from './components/ElectionResult'
+import { Download } from './components/download'
+
 
 
 
@@ -33,6 +35,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/addcandidate' element={<AddCandidate/>}/>
       <Route path='/dashboard/result' element={<ElectionResult/>}/>
+      <Route path='/dashboard/down' element={<Download/>}/>
       {/* <Route path='/dashboard/candidates' element={<Candidates/>}/> */}
       
     </Routes>

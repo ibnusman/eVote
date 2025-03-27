@@ -1,5 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+
+pdfMake.addVirtualFileSystem(pdfFonts);
 
 export function ElectionResult() {
   const [election, setElection] = useState([]);
@@ -16,11 +20,60 @@ export function ElectionResult() {
     getResult();
   }, []);
 
+  const docDefinition = {
+    content: [
+      {
+        text: "Election Results",
+        style: "header",
+        alignment: "center",
+      },
+      {
+        style: "tableExample",
+        table: {
+          headerRows: 1,
+          widths: ["*", "auto", "auto"],
+          body: [
+            ["Name", "Party", "Votes"],
+            ...election.map((result) => [
+              result.name,
+              result.party || "N/A",
+              result.votes || 0,
+            ]),
+          ],
+        },
+        layout: "lightHorizontalLines",
+      },
+    ],
+    styles: {
+      header: {
+        fontSize: 18,
+        bold: true,
+        margin: [0, 0, 0, 10],
+      },
+      tableExample: {
+        fontSize: 12,
+        margin: [0, 5],
+      },
+    },
+  };
+
+  const testDownload = () => {
+    const pdfDoc = pdfMake.createPdf(docDefinition);
+    pdfDoc.download("Election result.pdf");
+  };
+
   return (
     <div className="w-full">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Election Results</h2>
+      <button
+        className="w-full bg-blue-500 text-black p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
+        onClick={testDownload}
+      >
+        Download Election Results as PDF
+      </button>
+
       {election.length > 0 ? (
-        <div className="bg-white p-6 rounded-lg shadow-md w-full overflow-x-auto">
+        <div className="bg-white p-6 rounded-lg shadow-md w-full overflow-x-auto mt-6">
           <table className="min-w-full border-collapse border border-gray-200">
             <thead>
               <tr className="bg-green-50 text-gray-700">
