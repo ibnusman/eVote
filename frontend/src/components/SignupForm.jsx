@@ -53,7 +53,7 @@ export function SignupForm() {
             className={`text-center p-2 rounded-lg ${
               message.includes("Error")
                 ? "text-red-600 bg-red-100"
-                : "text-green-600 bg-green-100"
+                : "text-red-600 bg-green-100"
             }`}
             role="alert"
           >
