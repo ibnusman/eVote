@@ -22,28 +22,40 @@ export function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
+
+    const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()?])[A-Za-z\d@#$%^&*()?]{8,}$/;
+    const checkPasswordRules = passwordRules.test(formData.pass);
+
+    if (checkPasswordRules) {
+        try {
+            const response = await axios.post(
+                "http://localhost:3000/api/auth/register",
+                formData,
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            console.log(response.data);
+            setMessage(response.data.message);
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 3000);
+
+        } catch (error) {
+            console.error("Error adding user:", error);
+
+            if (error.response && error.response.data) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage("Server Error");
+            }
         }
-      );
-      console.log(response.data);
-      setMessage(`${response.data.message}`);
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-    } catch (error) {
-      console.error("Error adding user", error.data);
-      if (error.response.data) {
-        setMessage(error.response.data.message);
-      } else {
-        setMessage("Server Error");
-      }
+    } else {
+        setMessage("Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.");
     }
-  };
+};
+
 
   return (
     <>
@@ -53,7 +65,7 @@ export function SignupForm() {
             className={`text-center p-2 rounded-lg ${
               message.includes("Error")
                 ? "text-red-600 bg-red-100"
-                : "text-red-600 bg-green-100"
+                : "text-red-600 bg-red-100"
             }`}
             role="alert"
           >
