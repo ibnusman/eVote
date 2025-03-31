@@ -13,9 +13,20 @@ export function SignupForm() {
     pass: "",
   });
   const [message, setMessage] = useState("");
+  const [inputCheck, setinputCheck] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+   const regPhone = /^(?:\+\d*|\d+)$/;
+
+  if (name === "phone" && !regPhone.test(value)) {
+    setinputCheck("Phone number must start with + or contain only digits");
+  } else {
+    setinputCheck(""); 
+  }
+
+
+    
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -39,7 +50,7 @@ export function SignupForm() {
             setMessage(response.data.message);
 
             setTimeout(() => {
-                navigate("/login");
+                navigate("/vu");
             }, 3000);
 
         } catch (error) {
@@ -64,8 +75,8 @@ export function SignupForm() {
           <div
             className={`text-center p-2 rounded-lg ${
               message.includes("Error")
-                ? "text-red-600 bg-red-100"
-                : "text-red-600 bg-red-100"
+                ? "text-red-600 bg-green-100"
+                : "text-red-600 bg-green-100"
             }`}
             role="alert"
           >
@@ -125,13 +136,14 @@ export function SignupForm() {
               Phone
             </label>
             <input
-              type="number"
+              type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
               required
             />
+           <p className="text-red-500">{inputCheck}</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -165,7 +177,7 @@ export function SignupForm() {
 
         <button
           type="submit"
-          className="w-full text-center bg-black text-white py-3 px-6 rounded-xl border-2 border-black hover:bg-gray-800 transition-all duration-300"
+          className="w-full text-center bg-black text-black py-3 px-6 rounded-xl border-2 border-black hover:bg-gray-800 transition-all duration-300"
         >
           Sign Up
         </button>

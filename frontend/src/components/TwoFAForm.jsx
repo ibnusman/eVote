@@ -1,9 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom';
 
 export function TwoFAForm() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+
     const [formData, setFormData] = useState({ emailOTP: "" }); // Correctly initializing as an object
     const [message, setMessage] = useState("");
                             
@@ -19,6 +22,9 @@ export function TwoFAForm() {
             const response = await axios.post("http://localhost:3000/api/auth/2fa", formData); // Sending data as an object
             if(response.status === 200) {
                 setMessage(response.data.message)
+                if(location.state?.form === ""){
+                    console.log("I am from signup")
+                }
                 navigate('/changepassword')
             }
             console.log(response.data);
