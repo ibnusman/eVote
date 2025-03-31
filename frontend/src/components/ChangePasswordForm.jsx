@@ -59,7 +59,7 @@ export function ChangePasswordForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <label className="block text-sm font-medium text-gray-700">Enter new Password</label>
                     <input 
                         type="password"
                         name="pass"

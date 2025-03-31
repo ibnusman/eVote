@@ -50,7 +50,7 @@ export function SignupForm() {
             setMessage(response.data.message);
 
             setTimeout(() => {
-                navigate("/vu");
+                navigate("/vu",{ state: { from: "/register" } });
             }, 3000);
 
         } catch (error) {
