@@ -6,6 +6,7 @@ import { login } from '../controllers/authController.js';
 import { forgetPassword } from '../controllers/authController.js';
 import { changePassword } from '../controllers/authController.js';
 import { createElection } from '../controllers/dashboardController.js';
+import {verifyToken} from '../middleware/authMiddleware.js'
 
 
 const app = express();

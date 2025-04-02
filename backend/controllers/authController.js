@@ -7,6 +7,7 @@ import AfricasTalking from 'africastalking';
 import SMS_verification from './sms.js';
 import sendEmail from './email.js';
 import Otp from '../model/Otp.js';
+import jwt from 'jsonwebtoken'
 
 
 const app = express();
@@ -115,27 +116,38 @@ try {
 
 const user = await User.findOne({email:email})
 
-
- const isValidPassowrd = await bcrypt.compare(password, user.password);
-// console.log(isValidPassowrd)
-
 if (!user){
   res.status(400).json({message:"User not found"});
 }
+ const isValidPassowrd = await bcrypt.compare(password, user.password);
+// console.log(isValidPassowrd)
 
-if(isValidPassowrd)
+
+
+if(!isValidPassowrd)
 {
  res.status(200).json({message:"login Succfully "})
 }
-else{
-  res.status(400).json({message:"Invalid password"});
-}
+ const isValidPassword = await bcrypt.compare(password, user.password);
 
-} catch (error) {
-  res.status(500).json({message:"Server Error",error})
-}
+    if (!isValidPassword) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
 
-}
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id },
+     process.env.JWT_SECRET, // 
+      { expiresIn: '1h' }
+    );
+
+    // Send response with token
+    res.status(200).json({ message: "Login successful", token });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+
+};
 
 //Forget Password
 
