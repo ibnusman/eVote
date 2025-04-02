@@ -5,11 +5,18 @@ import { Link } from "react-router";
 
 export const ViewElection = () => {
   const [elections, setElections] = useState([]);
+  const token = localStorage.getItem("token");
+      console.log(token);
+
 
   useEffect(() => {
     const fetchElection = async () => {
+    
       try {
-        const response = await axios.get("http://localhost:3000/api/dashboard/electionList");
+        const response = await axios.get("http://localhost:3000/api/dashboard/electionList", 
+          {headers:{  "Authorization": `Bearer ${token}`},
+
+        });
         console.log("API Response:", response.data);
         setElections(response.data.storedElections);
       } catch (error) {

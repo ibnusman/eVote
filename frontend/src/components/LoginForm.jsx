@@ -28,6 +28,12 @@ export function LoginForm() {
             if(response.status === 200)
             {
                 setMessage(response.data.message)
+                
+            }
+            if(response.data.token)
+            {
+                localStorage.setItem("token", response.data.token);
+                
             }
             console.log(response.data);
                 navigate('/dashboard')
