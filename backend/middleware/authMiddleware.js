@@ -2,36 +2,33 @@ import jwt from 'jsonwebtoken';
 
 export const verifyToken = (req, res, next) => {
   const authHeader = req.header('Authorization');
-  
-  // Check if the Authorization header is present
+
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Access Denied' });
   }
 
-  // Extract the actual token (remove "Bearer " prefix)
   const token = authHeader.split(' ')[1];
 
   try {
-    // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach userId to the request object
-    req.user = decoded;
+    // Ensure `decoded` includes `role`
+    if (!decoded.userId || !decoded.role) {
+      return res.status(401).json({ message: "Invalid Token Data" });
+    }
 
-    // Proceed to the next middleware or route handler
-    next();
+    req.user = decoded;
+    next(); // Continue to the next middleware or route
   } catch (error) {
     return res.status(401).json({ message: "Invalid Token" });
   }
-
-
 };
 
-export const checkRole = (roles) =>{
-    return(req, res, next)=>{
-        if(!req.user|| !roles.includes(req.user.role)){
-            return res.status(403).json({message:"Forbidden: You do not have access"})
-        }
-        next();
-    };
-}
+export const checkRole = (roles) => {
+  return (req, res, next) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return res.status(403).json({ message: "Forbidden: You do not have access" });
+    }
+    next();
+  };
+};

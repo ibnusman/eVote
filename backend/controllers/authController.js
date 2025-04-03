@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const userSignup = async (req, res) => {
   try {
     //Getting user input
-    const { fname, sname, email, phone, username, pass } = req.body;
+    const { fname, sname, email, phone, username, pass,role } = req.body;
     console.log("Request body:", req.body);
 
     //hashing password
@@ -27,7 +27,7 @@ const userSignup = async (req, res) => {
     const password = await bcrypt.hash(pass, salt);
 
     // Add detials to DB
-    const newUser = await User.create({ fname, sname, email, phone, username, password });
+    const newUser = await User.create({ fname, sname, email, phone, username, password,role });
 
     // console.log(newUser);
    
@@ -136,7 +136,7 @@ if(!isValidPassowrd)
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id },
+      { userId: user._id, role: user.role },
      process.env.JWT_SECRET, // 
       { expiresIn: '1h' }
     );
