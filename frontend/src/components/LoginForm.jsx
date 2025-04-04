@@ -28,11 +28,13 @@ export function LoginForm() {
             if(response.status === 200)
             {
                 setMessage(response.data.message)
+              localStorage.setItem("role", response.data.user.role)
                 
             }
             if(response.data.token)
             {
                 localStorage.setItem("token", response.data.token);
+                
                 
             }
             console.log(response.data);

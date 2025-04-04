@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export const ViewElection = () => {
   const [elections, setElections] = useState([]);
   const token = localStorage.getItem("token");
-      console.log(token);
+     
 
 
   useEffect(() => {

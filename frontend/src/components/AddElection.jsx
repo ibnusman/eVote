@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
 import axios from "axios";
 
 export const AddElection = () => {
   const [message, setMessage] = useState("");
   const [add, setAdd] = useState(false);
+  const [userRole,setUserRole] = useState ("");
+  const token = localStorage.getItem("token");
+  const roles = localStorage.getItem("role");
+  const [adminWork,setAdminWork] = useState(false);
   const [formData, setFormData] = useState({
     position: "",
     category: "",
@@ -13,20 +17,39 @@ export const AddElection = () => {
     endDate: "",
   });
 
+
+ useEffect(() => {
+    if (roles) {
+      setUserRole(roles); 
+    }
+  }, []); 
+
+  // Set adminWork based on role change
+  useEffect(() => {
+    if (userRole === 'admin') {
+      setAdminWork(true);  
+    } else {
+      setAdminWork(false); 
+    }
+  }, [userRole]); 
+
   const handleClick = () => setAdd(!add);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
         "http://localhost:3000/api/dashboard/createElection",
-        formData
+        formData, {headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }}
       );
       setMessage(`${response.data.message}`);
       // Reset form on success
@@ -48,6 +71,7 @@ export const AddElection = () => {
 
   return (
     <div className="w-full">
+      { adminWork && (
       <button
         onClick={handleClick}
         className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
@@ -55,6 +79,7 @@ export const AddElection = () => {
         {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
         {add ? "Close" : "Add Election"}
       </button>
+)}
 
       {add && (
         <form
