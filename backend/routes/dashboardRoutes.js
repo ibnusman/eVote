@@ -9,13 +9,13 @@ const router = express.Router();
 router.post("/createElection",verifyToken, checkRole(["admin"]), createElection)
 router.get('/electionList',verifyToken,viewElection);
 
-router.post('/addcandidate',addCandidate);
+router.post('/addcandidate',verifyToken,checkRole(["admin"]), addCandidate);
 router.get('/candidatelist',viewCandidates);
 
 //votes
 router.post('/vote',votes);
 
-router.get('/result',voteResult);
+router.get('/result',verifyToken, checkRole(["admin"]),voteResult);
 
 
 export default router;

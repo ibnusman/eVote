@@ -142,7 +142,7 @@ if(!isValidPassowrd)
     );
 
     // Send response with token
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful", token,user });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }

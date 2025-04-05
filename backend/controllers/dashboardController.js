@@ -34,7 +34,7 @@ export const createElection = async (req, res) => {
 
 export const viewElection = async (req, res) => {
     try {
-        const storedElections = await Election.find({}, { _id: 0, position: 1, category: 1, description: 1, startDate: 1, endDate: 1 });
+        const storedElections = await Election.find({}, { _id: 1, position: 1, category: 1, description: 1, startDate: 1, endDate: 1 });
         res.status(200).json({ storedElections });
     } catch (error) {
         console.error("Error retrieving elections:", error.message);
