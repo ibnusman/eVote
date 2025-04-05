@@ -13,6 +13,7 @@ import AddCandidate from './pages/AddCandidate'
 import { Candidates } from './components/Candidates'
 import ElectionResult from './components/ElectionResult'
 import { Download } from './components/download'
+import { ProtectedRoutes } from './components/ProtectedRoutes'
 
 
 
@@ -26,16 +27,26 @@ function App() {
    
 <BrowserRouter>
     <Routes>
+    
       <Route path='/' element={<Landing/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Signup/>}/>
       <Route path='/forgetpassword' element={<ForgetPassword/>}/>
       <Route path='/vu' element={<VerifyUser/>}/>
       <Route path='/changepassword' element={<ChangePassword/>}/>
+
+    <Route element={<ProtectedRoutes/>}>
+  
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/dashboard/candidates/:id' element={<AddCandidate/>}/>
       <Route path='/dashboard/result' element={<ElectionResult/>}/>
       <Route path='/dashboard/down' element={<Download/>}/>
+      </Route>
+      
+
+
+
+   
       {/* <Route path='/dashboard/candidates' element={<Candidates/>}/> */}
       
     </Routes>
