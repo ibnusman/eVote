@@ -71,7 +71,11 @@ export const AddElection = () => {
 
   return (
     <div className="w-full">
-      { adminWork && (
+      { adminWork && (   <section className="mb-8 w-full">
+                <h2 className="text-xl font-semibold text-black-700 mb-4">Create a New Election</h2>
+                <div className="bg-white p-6 rounded-lg shadow-md w-full">
+                 
+             
       <button
         onClick={handleClick}
         className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
@@ -79,6 +83,9 @@ export const AddElection = () => {
         {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
         {add ? "Close" : "Add Election"}
       </button>
+
+         </div>
+              </section>
 )}
 
       {add && (

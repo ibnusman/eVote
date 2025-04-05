@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
 
 export const AddCandidateForm = ({ electionId }) => {
+  const [adminWork,setAdminWork] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     party: "",
@@ -17,7 +19,14 @@ export const AddCandidateForm = ({ electionId }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
+useEffect(()=>{
+  const roles = localStorage.getItem("role");
+  if(roles == "admin")
+  {
+    setAdminWork(true);
+  }
+  console.log(adminWork);
+},[])
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,6 +59,13 @@ export const AddCandidateForm = ({ electionId }) => {
 
   return (
     <div className="w-full">
+     
+      {adminWork && ( 
+          <section className="mb-8 w-full">
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">Add candidate</h2>
+              <div className="bg-white p-6 rounded-lg shadow-md w-full">
+             
+            
       <button
         onClick={handleClick}
         className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
@@ -57,7 +73,9 @@ export const AddCandidateForm = ({ electionId }) => {
         {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
         {add ? "Close" : "Add Candidate"}
       </button>
-
+      </div>
+      </section>
+)}
       {add && (
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Message */}

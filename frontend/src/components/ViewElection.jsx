@@ -34,10 +34,10 @@ export const ViewElection = () => {
         <span className="text-gray-500">No elections available</span>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {elections.map((election, index) => (
-            <Link to ='/dashboard/addcandidate' >
+          {elections.map((election) => (
+            <Link key={election._id} to ={`/dashboard/candidates/${election._id}`} >
             <div
-              key={index}
+             
               className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
             >
               <h3 className="text-lg font-medium text-gray-800">{election.position}</h3>
