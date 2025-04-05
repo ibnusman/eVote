@@ -7,11 +7,17 @@ pdfMake.addVirtualFileSystem(pdfFonts);
 
 export function ElectionResult() {
   const [election, setElection] = useState([]);
+  const token = localStorage.getItem("token");
+  const [adminWork, setAdminWork] = useState(false);
 
   useEffect(() => {
     const getResult = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/api/dashboard/result");
+        const result = await axios.get("http://localhost:3000/api/dashboard/result",
+          {headers:{
+            "Authorization": `Bearer ${token}`
+          }}
+        );
         setElection(result.data.message);
       } catch (error) {
         console.log("Error fetching results:", error);
@@ -20,6 +26,18 @@ export function ElectionResult() {
     getResult();
   }, []);
 
+  useEffect(()=>{
+    const roles  = localStorage.getItem("role");
+       console.log(roles);
+    if(roles == "admin"){
+      setAdminWork(true);
+       console.log(`result ${adminWork}`);
+    }
+    
+  },[])
+   console.log(`result ${adminWork}`);
+  
+  
   const docDefinition = {
     content: [
       {
@@ -63,7 +81,10 @@ export function ElectionResult() {
   };
 
   return (
-    <div className="w-full">
+    
+    <>  
+    {( adminWork &&
+      <div className="w-full">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Election Results</h2>
       <button
         className="w-full bg-blue-500 text-blac p-2 rounded hover:bg-blue-600 transition-colors disabled:bg-gray-400"
@@ -97,7 +118,12 @@ export function ElectionResult() {
         <p className="text-gray-500 text-center py-4">No election results found</p>
       )}
     </div>
+  )}
+    </>
   );
+
+
+
 }
 
 export default ElectionResult;

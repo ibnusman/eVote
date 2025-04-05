@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { User } from 'lucide-react';
+import { Link, User } from 'lucide-react';
 import { AddElection } from '../components/AddElection';
 import { ViewElection } from '../components/ViewElection';
 import Header from '../components/Header';
+import { Navigate } from 'react-router';
 
 function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
-
+  const token = localStorage.getItem("token");
   const toggleMenu = () => setShowMenu(!showMenu);
+
+  if(!token){
+    return <Navigate to={"/login"} replace/>
+  }
 
   return (
     <div>
