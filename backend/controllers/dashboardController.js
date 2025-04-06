@@ -31,7 +31,7 @@ export const createElection = async (req, res) => {
     }
 };
 
-
+//vie election
 export const viewElection = async (req, res) => {
     try {
         const storedElections = await Election.find({}, { _id: 1, position: 1, category: 1, description: 1, startDate: 1, endDate: 1 });
@@ -41,6 +41,27 @@ export const viewElection = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error." });
     }
 };
+
+//delete election
+
+export const deleteElection = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const deleted = await Election.deleteOne({ _id: id });
+
+    if (deleted.deletedCount === 0) {
+      return res.status(400).json({ message: "No election found to delete" });
+    }
+
+    res.status(200).json({ message: "Election deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error during deletion", error });
+  }
+};
+
+
+
 
 //adding candidates
 export const addCandidate = async (req,res) =>{
@@ -59,7 +80,7 @@ export const addCandidate = async (req,res) =>{
 
 }
 
-
+//view candidate
 export const viewCandidates = async (req,res)=>{
 
     try {
@@ -77,7 +98,7 @@ export const viewCandidates = async (req,res)=>{
     }
    
 }
-
+//vote
 export const votes = async(req,res) =>{
 
     const{_id,votes} = req.body;
