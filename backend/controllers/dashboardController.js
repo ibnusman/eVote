@@ -46,9 +46,9 @@ export const viewElection = async (req, res) => {
 
 export const deleteElection = async (req, res) => {
   try {
-    const { id } = req.body;
+   const { id } = req.params;
 
-    const deleted = await Election.deleteOne({ _id: id });
+  const deleted = await Election.deleteOne({ _id: id });
 
     if (deleted.deletedCount === 0) {
       return res.status(400).json({ message: "No election found to delete" });
@@ -97,6 +97,27 @@ export const viewCandidates = async (req,res)=>{
         
     }
    
+}
+
+
+//delete Candidate
+export const deleteCandidate = async (req,res) =>{
+    try {
+        const id = req.params.id;
+        const removeCandidate = await Candidate.deleteOne({_id:id});
+        if(removeCandidate.deletedCount === 1){
+        res.status(200).json({message:"Candidate deleted succesfully"})
+
+        }
+        else{
+           res.status(400).json({message:" Candidate not found "});
+        }
+        
+    } catch (error) {
+        console.error("Internal Error",error);
+    }
+
+
 }
 //vote
 export const votes = async(req,res) =>{
