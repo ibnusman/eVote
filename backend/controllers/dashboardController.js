@@ -87,10 +87,12 @@ export const viewCandidates = async (req,res)=>{
          const candidateList = await Candidate.find({});
          if(candidateList.length === 0)
          {
+        
             return res.status(404).json({message:"No recored found"});
          }
     // console.log(candidateList);
     res.status(200).json({candidateList})
+        // console.log(candidateList);
     } catch (error) {
         console.error("Server error",error);
         res.status(500).json({message:"Error connectiing to server"});
@@ -103,15 +105,15 @@ export const viewCandidates = async (req,res)=>{
 //delete Candidate
 export const deleteCandidate = async (req,res) =>{
     try {
-        const id = req.params.id;
+        const {id} = req.params;
         const removeCandidate = await Candidate.deleteOne({_id:id});
-        if(removeCandidate.deletedCount === 1){
-        res.status(200).json({message:"Candidate deleted succesfully"})
+        if(removeCandidate.deletedCount === 0){
+        return res.status(200).json({message:"Candidate not found"})
 
         }
-        else{
-           res.status(400).json({message:" Candidate not found "});
-        }
+  
+        res.status(400).json({message:" Candidate deleted succesfully "});
+  
         
     } catch (error) {
         console.error("Internal Error",error);
