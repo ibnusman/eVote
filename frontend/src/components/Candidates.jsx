@@ -1,4 +1,6 @@
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React,{useState,useEffect} from "react";
 import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
@@ -10,6 +12,20 @@ export function Candidates (){
   const [votes, setVotes] = useState({}); // Store votes per candidate
 
 
+const deleteCandidate = async(id) =>{
+  const confrimDelete = window.confirm("Are you sure?");
+  if(!confrimDelete) return;
+  console.log(id);
+  try{
+    const delCandidate = await axios.delete(`http://localhost:3000/api/dashboard/deleteCandidate/${id}`);
+    console.log(delCandidate.data.message);
+    toast.success("Candidate deleted successfully!");
+    setCandidates((prevCandidate)=>prevCandidate.filter((candidate)=>candidate._id !== id));
+  }catch(error){
+    console.log(error)
+  }
+
+}
 
         
         useEffect(() => {
@@ -76,7 +92,12 @@ export function Candidates (){
                 {candi.about || "No description available"}
                 Votes: {votes[candi._id]}
               </p>
-             
+             <button
+             onClick={()=>deleteCandidate(candi._id)}
+             >
+
+                Delete
+             </button>
               <button
                 onClick={() => handleClick(candi._id)}
                 className="mt-3 flex items-center gap-2 bg-green-500 text-black px-4 py-2 rounded-lg border border-green-600 hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -89,6 +110,8 @@ export function Candidates (){
       ) : (
         <p className="text-gray-500 text-center">No candidates found</p>
       )}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
+    
   );
 }

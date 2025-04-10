@@ -32,7 +32,7 @@ export const ViewElection = () => {
 
     try{
     const delresponse = await axios.delete(`http://localhost:3000/api/dashboard/deleteElection/${id}`);
-      console.log(delresponse);
+      // console.log(delresponse);
           setElections((prevElections) => prevElections.filter((election) => election._id !== id));
 
     }
