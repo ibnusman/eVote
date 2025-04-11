@@ -12,6 +12,11 @@ const CandidateSchema = new Schema ({
     default: 0, 
     min: 0,    
   },
+  election: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Election",
+    required: true,
+  },
 });
 
 const Candidate = model("Candidate", CandidateSchema)

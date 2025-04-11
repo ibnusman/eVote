@@ -71,7 +71,7 @@ export const addCandidate = async (req,res) =>{
         }
     try {
      
-        const newCandidate = await Candidate.create({name,party,about,image });
+        const newCandidate = await Election.create({name,party,about,image });
        res.status(201).json({message:"Candidate add successfully"})
     } catch (error) {
         res.status(500).json({message:"Error adding candidate"})
@@ -79,6 +79,28 @@ export const addCandidate = async (req,res) =>{
     }
 
 }
+
+
+//Adding a candidate using election
+
+// export const addCandidate = async (req,res) =>{
+//     const {name,party,about,image} = req.body;
+//        if(!name){
+//          return res.status(400).json({message:"Name is a must"});
+//         }
+//     try {
+     
+//         const newCandidate = await Election.create({candidate: [name,party,about,image]});
+//        res.status(201).json({message:"Candidate add successfully"})
+//     } catch (error) {
+//         res.status(500).json({message:"Error adding candidate",error})
+        
+//     }
+
+// }
+
+
+
 
 //view candidate
 export const viewCandidates = async (req,res)=>{
@@ -108,11 +130,11 @@ export const deleteCandidate = async (req,res) =>{
         const {id} = req.params;
         const removeCandidate = await Candidate.deleteOne({_id:id});
         if(removeCandidate.deletedCount === 0){
-        return res.status(200).json({message:"Candidate not found"})
+        return res.status(400).json({message:"Candidate not found"})
 
         }
   
-        res.status(400).json({message:" Candidate deleted succesfully "});
+        res.status(200).json({message:" Candidate deleted succesfully "});
   
         
     } catch (error) {

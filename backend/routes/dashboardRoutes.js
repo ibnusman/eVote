@@ -12,7 +12,11 @@ router.get('/electionList',viewElection);
 router.delete("/deleteElection/:id", deleteElection);
 
 //candidate
-router.post('/addcandidate',verifyToken,checkRole(["admin"]), addCandidate);
+// router.post('/addcandidate',verifyToken,checkRole(["admin"]), addCandidate);
+ router.post('/addcandidate', addCandidate);
+
+
+
 router.get('/candidatelist',viewCandidates);
 router.delete("/deleteCandidate/:id",deleteCandidate)
 
