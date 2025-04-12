@@ -1,16 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
-
-export const AddCandidateForm = ({ electionId }) => {
+import {useParams} from "react-router-dom"
+export const AddCandidateForm = () => {
   const [adminWork,setAdminWork] = useState(false);
-
+const {electionId} = useParams();
   const [formData, setFormData] = useState({
     name: "",
     party: "",
     about: "",
     image: "",
-    electionId: electionId, // Passed from parent (e.g., /election/123/candidates)
+   electionId: "", 
   });
  const [add, setAdd] = useState(false);
   const [message, setMessage] = useState("");
@@ -25,37 +25,50 @@ useEffect(()=>{
   {
     setAdminWork(true);
   }
-  console.log(adminWork);
-},[])
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    // Basic client-side validation
-    if (!formData.name) {
-      setMessage("Name is required");
-      setTimeout(() => setMessage(""), 3000);
-      return;
-    }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/dashboard/addcandidate",
-        formData
-      );
-      setMessage(response.data.message);
-      setTimeout(() => setMessage(""), 3000);
-      setFormData({
-        name: "",
-        party: "",
-        about: "",
-        image: "",
-        electionId: electionId, // Preserve electionId
-      });
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Error adding candidate");
-      setTimeout(() => setMessage(""), 3000);
-    }
+  }, []);
+
+console.log("Election ID from URL:", electionId); 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+console.log("Election ID from URL:", electionId); 
+  // Basic client-side validation
+  if (!formData.name) {
+    setMessage("Name is required");
+    setTimeout(() => setMessage(""), 3000);
+    return;
+  }
+
+  const finalFormData = {
+    ...formData,
+    electionId: electionId, // ✅ this ensures it’s present when sending
   };
+
+  console.log("Submitting finalFormData:", finalFormData); // Optional debug
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/dashboard/addcandidate",
+      finalFormData
+    );
+
+    setMessage(response.data.message);
+    setTimeout(() => setMessage(""), 3000);
+
+    setFormData({
+      name: "",
+      party: "",
+      about: "",
+      image: "",
+      electionId, // keep it for next form use
+    });
+  } catch (error) {
+    setMessage(error.response?.data?.message || "Error adding candidate");
+    setTimeout(() => setMessage(""), 3000);
+  }
+};
 
   return (
     <div className="w-full">

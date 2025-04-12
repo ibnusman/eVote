@@ -2,12 +2,15 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import React,{useState,useEffect} from "react";
 import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 
 
 export function Candidates (){
+
+
     const [candidates,setCandidates] = useState([])
   const [votes, setVotes] = useState({}); // Store votes per candidate
 

@@ -38,7 +38,7 @@ function App() {
     <Route element={<ProtectedRoutes/>}>
   
       <Route path='/dashboard' element={<Dashboard/>}/>
-      <Route path='/dashboard/candidates/:id' element={<AddCandidate/>}/>
+      <Route path='/dashboard/candidates/:electionId' element={<AddCandidate/>}/>
       <Route path='/dashboard/result' element={<ElectionResult/>}/>
       <Route path='/dashboard/down' element={<Download/>}/>
       </Route>
