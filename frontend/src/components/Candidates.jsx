@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useParams} from 'react-router-dom'
 
 
 import React,{useState,useEffect} from "react";
@@ -9,7 +10,7 @@ import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 
 export function Candidates (){
-
+const {electionId} = useParams();
 
     const [candidates,setCandidates] = useState([])
   const [votes, setVotes] = useState({}); // Store votes per candidate
@@ -34,7 +35,7 @@ const deleteCandidate = async(id) =>{
         useEffect(() => {
     const getCandidates = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/dashboard/candidatelist");
+        const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);
         setCandidates(response.data.candidateList);
 
         // Initialize votes state (to store votes per candidate)
