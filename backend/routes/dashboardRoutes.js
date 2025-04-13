@@ -17,7 +17,7 @@ router.delete("/deleteElection/:id", deleteElection);
 
 
 
-router.get('/candidatelist',viewCandidates);
+router.get('/candidatelist/:electionId',viewCandidates);
 router.delete("/deleteCandidate/:id",deleteCandidate)
 
 //votes

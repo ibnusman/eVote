@@ -31,7 +31,7 @@ export const createElection = async (req, res) => {
     }
 };
 
-//vie election
+//view election
 export const viewElection = async (req, res) => {
     try {
         const storedElections = await Election.find({}, { _id: 1, position: 1, category: 1, description: 1, startDate: 1, endDate: 1 });
@@ -65,16 +65,18 @@ export const deleteElection = async (req, res) => {
 
 //adding candidates
 export const addCandidate = async (req,res) =>{
-    const {name,party,about,image} = req.body;
+    const {name,party,about,image,electionId} = req.body;
+   
        if(!name){
          return res.status(400).json({message:"Name is a must"});
         }
     try {
      
-        const newCandidate = await Election.create({name,party,about,image });
+        const newCandidate = await Candidate.create({name,party,about,image,electionId });
        res.status(201).json({message:"Candidate add successfully"})
     } catch (error) {
         res.status(500).json({message:"Error adding candidate"})
+        console.log(error)
         
     }
 
@@ -104,9 +106,10 @@ export const addCandidate = async (req,res) =>{
 
 //view candidate
 export const viewCandidates = async (req,res)=>{
-
+  const { electionId } = req.params;
+console.log(electionId);
     try {
-         const candidateList = await Candidate.find({});
+         const candidateList = await Candidate.find({electionId:electionId});
          if(candidateList.length === 0)
          {
         
