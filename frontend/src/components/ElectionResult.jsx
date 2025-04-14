@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import {useParams} from "react-router-dom"
 
 pdfMake.addVirtualFileSystem(pdfFonts);
 
@@ -9,11 +10,12 @@ export function ElectionResult() {
   const [election, setElection] = useState([]);
   const token = localStorage.getItem("token");
   const [adminWork, setAdminWork] = useState(false);
+  const {electionId} = useParams();
 
   useEffect(() => {
     const getResult = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/api/dashboard/result",
+        const result = await axios.get(`http://localhost:3000/api/dashboard/result/${electionId}`,
           {headers:{
             "Authorization": `Bearer ${token}`
           }}
