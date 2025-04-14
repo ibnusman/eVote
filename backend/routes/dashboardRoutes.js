@@ -23,7 +23,7 @@ router.delete("/deleteCandidate/:id",deleteCandidate)
 //votes
 router.post('/vote',votes);
 
-router.get('/result',verifyToken,checkRole(["admin"]),voteResult);
+router.get('/result/:electionId',verifyToken,checkRole(["admin"]),voteResult);
 
 
 export default router;

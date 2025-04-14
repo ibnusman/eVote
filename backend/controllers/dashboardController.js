@@ -172,11 +172,13 @@ try {
    
 }
 
-export const voteResult = async (req,res) =>{
 
+// election result 
+export const voteResult = async (req,res) =>{
+    const {electionId} = req.params;
 
     try {
-        const electionResult = await Candidate.find({});
+        const electionResult = await Candidate.find({electionId:electionId});
         res.status(200).json({message:electionResult});
 
 // console.log(electionResult);
