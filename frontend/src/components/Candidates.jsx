@@ -79,7 +79,7 @@ const deleteCandidate = async(id) =>{
           {candidates.map((candi) => (
            
             <div
-              key={candi._id || candi.name} // Use _id if available, fallback to name
+              key={candi._id || candi.name} // Use _id if available, fallback to name if not found
               className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow flex flex-col items-center"
             >
               <img
