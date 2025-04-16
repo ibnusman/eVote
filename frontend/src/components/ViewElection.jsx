@@ -70,7 +70,7 @@ export const ViewElection = () => {
       {/* Sorting Dropdown */}
       <div className="mb-6">
         <label htmlFor="positions" className="block text-sm font-medium text-gray-600 mb-1">
-          Filter by Position
+          Filter by Positions
         </label>
         <select
           onChange={sorting}
