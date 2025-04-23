@@ -11,7 +11,7 @@ import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 export function Candidates (){
 const {electionId} = useParams();
-
+const [notVoted,setnotVoted] = useState(true)
     const [candidates,setCandidates] = useState([])
   const [votes, setVotes] = useState({}); // Store votes per candidate
 
@@ -52,6 +52,8 @@ const deleteCandidate = async(id) =>{
     getCandidates();
   }, []);
        const handleClick = async (candidateId) => {
+        setnotVoted(false);
+         toast.success("Voted successfully!");
     // Update UI immediately (optimistic update)
     setVotes((prevVotes) => ({
       ...prevVotes,
@@ -102,12 +104,14 @@ const deleteCandidate = async(id) =>{
 
                 Delete
              </button>
+             { notVoted &&
               <button
                 onClick={() => handleClick(candi._id)}
                 className="mt-3 flex items-center gap-2 bg-green-500 text-black px-4 py-2 rounded-lg border border-green-600 hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 <FaVoteYea /> Vote
               </button>
+              }
             </div>
           ))}
         </div>
