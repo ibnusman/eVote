@@ -10,12 +10,13 @@ import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 
 export function Candidates (){
+  const userID = localStorage.getItem("userID");
 const {electionId} = useParams();
 const [notVoted,setnotVoted] = useState(true)
     const [candidates,setCandidates] = useState([])
   const [votes, setVotes] = useState({}); // Store votes per candidate
 
-
+   console.log(`the user ID is ${userID}`); 
 const deleteCandidate = async(id) =>{
   const confrimDelete = window.confirm("Are you sure?");
   if(!confrimDelete) return;
@@ -33,6 +34,7 @@ const deleteCandidate = async(id) =>{
 
         
         useEffect(() => {
+       
     const getCandidates = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);

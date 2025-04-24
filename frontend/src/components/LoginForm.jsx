@@ -28,7 +28,12 @@ export function LoginForm() {
             if(response.status === 200)
             {
                 setMessage(response.data.message)
-              localStorage.setItem("role", response.data.user.role)
+              localStorage.setItem("role", response.data.user.role);
+
+        
+            localStorage.setItem("userID",response.data.user._id);
+        //    console.log(userID);
+           
                 
             }
             if(response.data.token)
