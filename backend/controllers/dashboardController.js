@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import Election from '../model/Election.js';
 import Candidate from '../model/Candidate.js';
+import User from '../model/User.js';
 
 
 const app = express();
@@ -107,7 +108,7 @@ export const addCandidate = async (req,res) =>{
 //view candidate
 export const viewCandidates = async (req,res)=>{
   const { electionId } = req.params;
-console.log(electionId);
+// console.log(electionId);
     try {
          const candidateList = await Candidate.find({electionId:electionId});
          if(candidateList.length === 0)
@@ -191,4 +192,30 @@ export const voteResult = async (req,res) =>{
 }
 
 
-// sorting 
+//check voting status
+export const voteStatus = async (req,res)=>{
+   const {id} = req.body;
+    try {
+
+        const userVote = await User.findOne({id:id},{voted:1});
+        res.status(200).json({userVote});
+    } catch (error) {
+
+        console.log(error);
+        
+    }
+}
+
+
+//updating vote
+export const upateVote = async (req,res)=>{
+    const {id,vstatus} = req.body;
+
+    try {
+        const updateVotes = await User.updateOne({_id:id},{$set:{voted:vstatus},  $currentDate: { lastUpdated: true }})
+        console.log(updateVotes);
+    } catch (error) {
+        console.log(error)
+    }
+
+}
