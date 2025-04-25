@@ -122,7 +122,7 @@ if (!user){
  const isValidPassowrd = await bcrypt.compare(password, user.password);
 // console.log(isValidPassowrd)
 
-
+  
 
 if(!isValidPassowrd)
 {

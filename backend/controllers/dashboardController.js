@@ -207,7 +207,7 @@ export const voteStatus = async (req,res)=>{
 }
 
 
-//updating vote
+//updating vote configuration
 export const upateVote = async (req,res)=>{
     const {id,vstatus} = req.body;
 
