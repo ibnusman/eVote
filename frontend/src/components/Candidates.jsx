@@ -10,13 +10,13 @@ import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
 
 
 export function Candidates (){
-  const userID = localStorage.getItem("userID");
+  const voteStatus = localStorage.getItem("voteStatus");
 const {electionId} = useParams();
-const [notVoted,setnotVoted] = useState(true)
+const [voted,setVoted] = useState(voteStatus);
     const [candidates,setCandidates] = useState([])
   const [votes, setVotes] = useState({}); // Store votes per candidate
 
-   console.log(`the user ID is ${userID}`); 
+   console.log(`the user ID is ${voted}`); 
 const deleteCandidate = async(id) =>{
   const confrimDelete = window.confirm("Are you sure?");
   if(!confrimDelete) return;
@@ -40,6 +40,8 @@ const deleteCandidate = async(id) =>{
         const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);
         setCandidates(response.data.candidateList);
 
+
+
         // Initialize votes state (to store votes per candidate)
         const initialVotes = {};
         response.data.candidateList.forEach((candi) => {
@@ -53,9 +55,23 @@ const deleteCandidate = async(id) =>{
 
     getCandidates();
   }, []);
+
+
+
+
+
        const handleClick = async (candidateId) => {
-        setnotVoted(false);
+setVoted(false);
+localStorage.setItem("voteStatus",voted)
          toast.success("Voted successfully!");
+        try {
+           const response = axios.post("http://localhost:3000/api/dashboard/voteStatus",{
+            
+           })
+        } catch (error) {
+          console.log(error)
+        }
+       
     // Update UI immediately (optimistic update)
     setVotes((prevVotes) => ({
       ...prevVotes,
@@ -74,7 +90,11 @@ const deleteCandidate = async(id) =>{
       console.error("Error voting:", error);
     }
   };
-        
+      
+  
+
+
+
        return (
     <div className="p-6">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Candidates</h2>
@@ -104,7 +124,7 @@ const deleteCandidate = async(id) =>{
              onClick={()=>deleteCandidate(candi._id)}
              >
 
-                Delete
+                Delete all
              </button>
              { notVoted &&
               <button

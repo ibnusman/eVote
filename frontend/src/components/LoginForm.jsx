@@ -30,10 +30,11 @@ export function LoginForm() {
                 setMessage(response.data.message)
               localStorage.setItem("role", response.data.user.role);
 
-        
-            localStorage.setItem("userID",response.data.user._id);
+            //Vote status
+            localStorage.setItem("voteStatus",response.data.user.voted);
         //    console.log(userID);
-           
+           //userID. 
+           localStorage.setItem("userID",response.data.user._id)
                 
             }
             if(response.data.token)
