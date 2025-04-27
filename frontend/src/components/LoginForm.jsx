@@ -34,7 +34,7 @@ export function LoginForm() {
             localStorage.setItem("voteStatus",response.data.user.voted);
         //    console.log(userID);
            //userID. 
-           localStorage.setItem("userID",response.data.user._id)
+           localStorage.setItem("userId", response.data.user._id);
                 
             }
             if(response.data.token)

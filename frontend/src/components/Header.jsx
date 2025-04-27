@@ -13,6 +13,8 @@ function Header() {
   const toggleMenu = () => setShowMenu(!showMenu);
 
   const handleLogout =()=>{
+       localStorage.removeItem("voteStatus");
+    localStorage.removeItem("userID");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
    navigate("/login");
