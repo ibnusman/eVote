@@ -1,5 +1,5 @@
 import express from 'express'
-import { viewElection,createElection, addCandidate, viewCandidates, votes, voteResult, deleteElection, deleteCandidate, voteStatus, upateVote } from '../controllers/dashboardController.js';
+import { viewElection,createElection, addCandidate, viewCandidates, votes, voteResult, deleteElection, deleteCandidate, voteStatus, updateVote } from '../controllers/dashboardController.js';
 import { checkRole, verifyToken } from '../middleware/authMiddleware.js';
 import { Admin } from 'mongodb';
 
@@ -24,7 +24,7 @@ router.delete("/deleteCandidate/:id",deleteCandidate)
 router.post('/vote',votes);
 router.post('/voteStatus',voteStatus);
 
-router.post('/upateVote',upateVote);
+router.post('/updateVote',updateVote);
 
 
 router.get('/result/:electionId',verifyToken,checkRole(["admin"]),voteResult);

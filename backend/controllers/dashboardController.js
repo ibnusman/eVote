@@ -193,29 +193,44 @@ export const voteResult = async (req,res) =>{
 
 
 //check voting status
-export const voteStatus = async (req,res)=>{
-   const {id} = req.body;
+// Check the user's vote status
+export const voteStatus = async (req, res) => {
+    const { id } = req.body;  // Assuming you're passing the user's ID in the body
+
     try {
-
-        const userVote = await User.findOne({id:id},{voted:1});
-        res.status(200).json({userVote});
+        // Find the user by ID and return their voting status
+        const userVote = await User.findOne({ _id: id }, { voted: 1 });
+        res.status(200).json({ userVote }); // Return the vote status
     } catch (error) {
+        console.error("Error checking vote status:", error);
+        res.status(500).json({ error: "Internal server error" }); // Handle server errors
+    }
+}
 
+// Update the user's vote status
+export const updateVote = async (req, res) => {
+    const { id, vstatus } = req.body;
+
+    if (!id || typeof vstatus !== "boolean") {
+        return res.status(400).json({ message: "Invalid request. ID and vstatus are required." });
+    }
+
+    try {
+        const updateVotes = await User.updateOne(
+            { _id: id },
+            { 
+                $set: { voted: vstatus },
+                $currentDate: { lastUpdated: true }
+            }
+        );
+
+        if (updateVotes.modifiedCount === 0) {
+            return res.status(404).json({ message: "User not found or vote status not updated." });
+        }
+
+        res.status(200).json({ message: "Vote status updated successfully." });
+    } catch (error) {
         console.log(error);
-        
+        res.status(500).json({ message: "Server error while updating vote." });
     }
-}
-
-
-//updating vote configuration
-export const upateVote = async (req,res)=>{
-    const {id,vstatus} = req.body;
-
-    try {
-        const updateVotes = await User.updateOne({_id:id},{$set:{voted:vstatus},  $currentDate: { lastUpdated: true }})
-        console.log(updateVotes);
-    } catch (error) {
-        console.log(error)
-    }
-
-}
+};
