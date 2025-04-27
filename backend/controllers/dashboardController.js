@@ -208,29 +208,34 @@ export const voteStatus = async (req, res) => {
 }
 
 // Update the user's vote status
+// Assuming you are using Express
 export const updateVote = async (req, res) => {
-    const { id, vstatus } = req.body;
+  try {
+    const { userId, electionId } = req.body;
 
-    if (!id || typeof vstatus !== "boolean") {
-        return res.status(400).json({ message: "Invalid request. ID and vstatus are required." });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    try {
-        const updateVotes = await User.updateOne(
-            { _id: id },
-            { 
-                $set: { voted: vstatus },
-                $currentDate: { lastUpdated: true }
-            }
-        );
+    // Check if the user already voted in this election
+    const hasVoted = user.voted.some(
+      (v) => v.electionId && v.electionId.toString() === electionId.toString()
+    );
 
-        if (updateVotes.modifiedCount === 0) {
-            return res.status(404).json({ message: "User not found or vote status not updated." });
-        }
-
-        res.status(200).json({ message: "Vote status updated successfully." });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Server error while updating vote." });
+    if (hasVoted) {
+      return res.status(400).json({ message: "User has already voted in this election" });
     }
+
+    // If not voted, add this electionId
+    user.voted.push({ electionId });
+
+    await user.save();
+
+    res.status(200).json({ message: "Vote status updated successfully" });
+  } catch (error) {
+    console.error("Error updating vote status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };

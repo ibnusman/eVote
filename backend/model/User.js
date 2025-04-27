@@ -9,15 +9,15 @@ const UserSchema = new Schema({
   phone: { type: String, required: true },
   username: { type: String, required: true, unique: true }, 
   password: { type: String, required: true },
-  voted: {type:Boolean, default:false},
-  role: {type:String,
-         enum:["admin","election_officer","voter"],
-         default:"voter"
-    }
-
-},  { timestamps: true });
-
-
+  role: {
+    type: String,
+    enum: ["admin", "election_officer", "voter"],
+    default: "voter"
+  },
+  voted: [{ 
+    electionId: { type: mongoose.Schema.Types.ObjectId, ref: "Election" }
+  }]
+}, { timestamps: true });
 
 const User = model("User", UserSchema);
 
