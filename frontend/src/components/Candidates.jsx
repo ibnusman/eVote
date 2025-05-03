@@ -13,75 +13,74 @@ export function Candidates() {
   const [votes, setVotes] = useState({}); // Store votes per candidate
   const [notVoted, setNotVoted] = useState(voteStatus === 'false'); // Only show vote button if user hasn't voted
 
-  useEffect(() => {
-    const getCandidates = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);
-        setCandidates(response.data.candidateList);
-
-        // Initialize votes state (to store votes per candidate)
-        const initialVotes = {};
-        response.data.candidateList.forEach((candi) => {
-          initialVotes[candi._id] = 0; 
-        });
-        setVotes(initialVotes);
-      } catch (error) {
-        console.log("Error fetching candidates:", error);
-      }
-    };
-
-    getCandidates();
-
-    // Check if the user has already voted
-    const checkVoteStatus = async () => {
-      const userId = localStorage.getItem("userId");
-      try {
-        const response = await axios.post("http://localhost:3000/api/dashboard/voteStatus", {
-          id: userId,
-        });
-        setVoted(response.data.userVote.voted); // Set the vote status based on the response
-        setNotVoted(response.data.userVote.voted === false); // If user hasn't voted, show the vote button
-      } catch (error) {
-        console.error("Error checking vote status:", error);
-      }
-    };
-    checkVoteStatus();
-  }, [electionId]);
-
-  const handleClick = async (candidateId) => {
-    setVoted(true);
-    setNotVoted(false);
-  // Save vote status in local storage
-    localStorage.setItem("voteStatus", "true"); 
-    toast.success("Voted successfully!");
-
-    // Optimistic UI update
-    setVotes((prevVotes) => ({
-      ...prevVotes,
-      [candidateId]: prevVotes[candidateId] + 1, 
-    }));
-
+useEffect(() => {
+  const getCandidates = async () => {
     try {
-      // Send vote to backend
-      await axios.post("http://localhost:3000/api/dashboard/updateVote", {
-        id: localStorage.getItem("userId"),  // Assuming you have a userId in localStorage
-        vstatus: true,
-      });
-    } catch (error) {
-      console.error("Error updating vote status:", error);
-    }
+      const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);
+      setCandidates(response.data.candidateList);
 
-    try {
-      // Send vote to backend for the candidate
-      const response = await axios.post("http://localhost:3000/api/dashboard/vote", {
-        _id: candidateId,
-        votes: 1,
+      const initialVotes = {};
+      response.data.candidateList.forEach((candi) => {
+        initialVotes[candi._id] = 0;
       });
-      console.log(response.data.message);
+      setVotes(initialVotes);
     } catch (error) {
-      console.error("Error voting:", error);
+      console.log("Error fetching candidates:", error);
     }
   };
+
+  getCandidates();
+
+  // Check if the user has already voted for this election
+  const checkVoteStatus = async () => {
+    const userId = localStorage.getItem("userId");
+    try {
+      const response = await axios.post("http://localhost:3000/api/dashboard/voteStatus", { id: userId });
+      const userVoteData = response.data.userVote.voted || [];
+
+      // Check if this electionId exists in user's voted elections
+      const hasVoted = userVoteData.some(vote => vote.electionId === electionId);
+      setVoted(hasVoted);
+      setNotVoted(!hasVoted);
+    } catch (error) {
+      console.error("Error checking vote status:", error);
+    }
+  };
+  checkVoteStatus();
+}, [electionId]);
+
+
+const handleClick = async (candidateId) => {
+  setVoted(true);
+  setNotVoted(false);
+  localStorage.setItem("voteStatus", "true"); 
+  toast.success("Voted successfully!");
+
+  setVotes((prevVotes) => ({
+    ...prevVotes,
+    [candidateId]: prevVotes[candidateId] + 1, 
+  }));
+
+  try {
+    // Update user's voted elections
+    await axios.post("http://localhost:3000/api/dashboard/updateVote", {
+      id: localStorage.getItem("userId"),
+      electionId: electionId,  // Pass electionId to backend
+    });
+  } catch (error) {
+    console.error("Error updating vote status:", error);
+  }
+
+  try {
+    await axios.post("http://localhost:3000/api/dashboard/vote", {
+      _id: candidateId,
+      votes: 1,
+    });
+  } catch (error) {
+    console.error("Error voting:", error);
+  }
+};
+
 
   const deleteCandidate = async (id) => {
     const confirmDelete = window.confirm("Are you sure?");

@@ -11,11 +11,7 @@ export const ViewElection = () => {
   const navigate = useNavigate();
   const [sort, setSort] = useState("");
   const [search,setSearch] = useState("");
-    const [list, setList] = useState([
-    "Go to the store",
-    "Wash the dishes",
-    "Learn some code",
-  ]);
+
 
   useEffect(() => {
     const fetchElection = async () => {
@@ -80,6 +76,10 @@ export const ViewElection = () => {
      setElections(seElec);
      
 
+  }
+
+  const handleEdit = (e) =>{
+    console.log("test");
   }
 
   return (
@@ -147,7 +147,12 @@ export const ViewElection = () => {
 
               {/* Edit & Delete Icons */}
               <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button title="Edit" className="text-blue-500 hover:text-blue-700">
+                <button title="Edit" 
+                onClick={(e)=>{
+                  e.stopPropagation();
+                  handleEdit(election._id);
+                }}
+                className="text-blue-500 hover:text-blue-700">
                   <Edit size={18} />
                 </button>
                 <button
