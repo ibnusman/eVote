@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
 import axios from "axios";
 
-export const AddElection = () => {
+export const AddElection = ({ editData, onElectionSaved }) => {
   const [message, setMessage] = useState("");
   const [add, setAdd] = useState(false);
-  const [userRole,setUserRole] = useState ("");
+  const [userRole, setUserRole] = useState("");
+  const [adminWork, setAdminWork] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const token = localStorage.getItem("token");
   const roles = localStorage.getItem("role");
-  const [adminWork,setAdminWork] = useState(false);
+
   const [formData, setFormData] = useState({
     position: "",
     category: "",
@@ -17,42 +19,34 @@ export const AddElection = () => {
     endDate: "",
   });
 
-
- useEffect(() => {
-    if (roles) {
-      setUserRole(roles); 
-    }
-  }, []); 
-
-  // Set adminWork based on role change
   useEffect(() => {
-    if (userRole === 'admin') {
-      setAdminWork(true);  
+    if (roles) setUserRole(roles);
+  }, []);
+
+  useEffect(() => {
+    setAdminWork(userRole === "admin");
+  }, [userRole]);
+
+  useEffect(() => {
+    if (editData) {
+      setFormData({
+        position: editData.position || "",
+        category: editData.category || "",
+        description: editData.description || "",
+        startDate: editData.startDate?.split("T")[0] || "",
+        endDate: editData.endDate?.split("T")[0] || "",
+      });
+      setIsEditMode(true);
+      setAdd(true);
     } else {
-      setAdminWork(false); 
+      setIsEditMode(false);
     }
-  }, [userRole]); 
+  }, [editData]);
 
-  const handleClick = () => setAdd(!add);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  };
- 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/dashboard/createElection",
-        formData, {headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        }}
-      );
-      setMessage(`${response.data.message}`);
-      // Reset form on success
+  const handleClick = () => {
+    setAdd((prev) => !prev);
+    setMessage("");
+    if (!isEditMode) {
       setFormData({
         position: "",
         category: "",
@@ -60,10 +54,55 @@ export const AddElection = () => {
         startDate: "",
         endDate: "",
       });
-      // Clear message after 3 seconds
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let response;
+      if (isEditMode && editData?._id) {
+        response = await axios.put(
+          `http://localhost:3000/api/dashboard/updateElection/${editData._id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } else {
+        response = await axios.post(
+          "http://localhost:3000/api/dashboard/createElection",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+
+      setMessage(response.data.message || "Election saved successfully!");
+      setFormData({
+        position: "",
+        category: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+      });
+      onElectionSaved(); // Refresh list
       setTimeout(() => setMessage(""), 3000);
+      setAdd(false);
     } catch (error) {
-      setMessage("Error creating election. Please try again.");
+      setMessage("Error saving election. Please try again.");
       console.error(error);
       setTimeout(() => setMessage(""), 3000);
     }
@@ -71,22 +110,22 @@ export const AddElection = () => {
 
   return (
     <div className="w-full">
-      { adminWork && (   <section className="mb-8 w-full">
-                <h2 className="text-xl font-semibold text-black-700 mb-4">Create a New Election</h2>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full">
-                 
-             
-      <button
-        onClick={handleClick}
-        className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
-      >
-        {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
-        {add ? "Close" : "Add Election"}
-      </button>
-
-         </div>
-              </section>
-)}
+      {adminWork && (
+        <section className="mb-8 w-full">
+          <h2 className="text-xl font-semibold text-black-700 mb-4">
+            {isEditMode ? "Edit Election" : "Create a New Election"}
+          </h2>
+          <div className="bg-white p-6 rounded-lg shadow-md w-full">
+            <button
+              onClick={handleClick}
+              className="flex items-center justify-center bg-blue-500 text-black py-2 px-4 rounded-lg text-lg hover:bg-blue-600 transition-all mb-4"
+            >
+              {add ? <X size={24} /> : <Plus size={24} className="mr-2" />}
+              {add ? "Close" : "Add Election"}
+            </button>
+          </div>
+        </section>
+      )}
 
       {add && (
         <form
@@ -102,6 +141,7 @@ export const AddElection = () => {
               {message}
             </div>
           )}
+
           <div>
             <label htmlFor="position" className="block text-sm font-medium">
               Position
@@ -112,6 +152,7 @@ export const AddElection = () => {
               value={formData.position}
               onChange={handleChange}
               className="block w-full p-2 border rounded"
+              required
             >
               <option value="">Select Position</option>
               <option value="President">President</option>
@@ -129,6 +170,7 @@ export const AddElection = () => {
               value={formData.category}
               onChange={handleChange}
               className="block w-full p-2 border rounded"
+              required
             >
               <option value="">Select Category</option>
               <option value="State">State</option>
@@ -148,7 +190,7 @@ export const AddElection = () => {
               className="block w-full p-2 border rounded"
             />
           </div>
- 
+
           <div>
             <label htmlFor="startDate" className="block text-sm font-medium">
               Start Date
@@ -160,6 +202,7 @@ export const AddElection = () => {
               value={formData.startDate}
               onChange={handleChange}
               className="block w-full p-2 border rounded"
+              required
             />
           </div>
 
@@ -174,6 +217,7 @@ export const AddElection = () => {
               value={formData.endDate}
               onChange={handleChange}
               className="block w-full p-2 border rounded"
+              required
             />
           </div>
 
@@ -181,7 +225,7 @@ export const AddElection = () => {
             type="submit"
             className="mt-4 bg-blue-500 text-black py-2 px-4 rounded-lg hover:bg-blue-600 transition-all"
           >
-            Submit Election
+            {isEditMode ? "Update Election" : "Submit Election"}
           </button>
         </form>
       )}
