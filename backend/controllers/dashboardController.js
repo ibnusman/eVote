@@ -239,3 +239,19 @@ export const updateVote = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+//updating 
+
+export const updateElection = async (req,res) => {
+    const {id} = req.params;
+    const update = req.body;
+
+   try {
+    const updated = await Election.findByIdAndUpdate(id, update, { new: true });
+    res.json({ message: "Election updated", data: updated });
+  } catch (error) {
+    res.status(500).json({ message: "Update failed", error });
+  }
+
+
+}
