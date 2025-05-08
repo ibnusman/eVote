@@ -236,7 +236,7 @@ export const updateVote = async (req, res) => {
     res.status(200).json({ message: "Vote status updated successfully" });
   } catch (error) {
     console.error("Error updating vote status:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Servers Error" });
   }
 };
 

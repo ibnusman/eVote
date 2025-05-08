@@ -1,5 +1,5 @@
 import express from 'express';
-import { viewElection, createElection, addCandidate, viewCandidates, votes, voteResult, deleteElection, deleteCandidate, voteStatus, updateVote } from '../controllers/dashboardController.js';
+import { viewElection, createElection, addCandidate, viewCandidates, votes, voteResult, deleteElection, deleteCandidate, voteStatus, updateVote, updateElection } from '../controllers/dashboardController.js';
 import { checkRole, verifyToken } from '../middleware/authMiddleware.js';
 
 const app = express();
@@ -45,17 +45,21 @@ router.post("/createElection", verifyToken, checkRole(["admin"]), createElection
  */
 router.get('/electionList', viewElection);
 
-router.delete("/deleteElection/:id", deleteElection);
+router.delete("/deleteElection/:id",verifyToken, checkRole(['admin']), deleteElection);
 
-router.post('/addcandidate', addCandidate);
+router.post('/addcandidate',verifyToken, checkRole(['admin']), addCandidate);
 
 router.get('/candidatelist/:electionId', viewCandidates);
-router.delete("/deleteCandidate/:id", deleteCandidate);
+router.delete("/deleteCandidate/:id",verifyToken, checkRole(['admin']), deleteCandidate);
 
 router.post('/vote', votes);
 router.post('/voteStatus', voteStatus);
 router.post('/updateVote', updateVote);
 
 router.get('/result/:electionId', verifyToken, checkRole(["admin"]), voteResult);
+
+router.put('/updateElection/:id', verifyToken, checkRole(['admin']), updateElection);
+
+
 
 export default router;
