@@ -117,7 +117,7 @@ try {
 const user = await User.findOne({email:email})
 
 if (!user){
-  res.status(400).json({message:"User not found"});
+ return res.status(400).json({message:"User not found"});
 }
  const isValidPassowrd = await bcrypt.compare(password, user.password);
 // console.log(isValidPassowrd)
@@ -126,7 +126,7 @@ if (!user){
 
 if(!isValidPassowrd)
 {
- res.status(200).json({message:"login Succfully "})
+return res.status(200).json({message:"login Succfully "})
 }
  const isValidPassword = await bcrypt.compare(password, user.password);
 
