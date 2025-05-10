@@ -26,7 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS setup
 app.use(cors({
-  origin: 'http://localhost:5173',  // Allow requests from this origin
+  // origin: 'http://localhost:5173', 
+  origin: 'https://evote-1.onrender.com', // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
