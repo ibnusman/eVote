@@ -34,7 +34,7 @@ export const ViewElection = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/dashboard/deleteElection/${id}`,
+        `https://evote-xuw7.onrender.com/api/dashboard/deleteElection/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchElection();

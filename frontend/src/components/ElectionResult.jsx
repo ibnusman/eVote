@@ -15,7 +15,7 @@ export function ElectionResult() {
   useEffect(() => {
     const getResult = async () => {
       try {
-        const result = await axios.get(`http://localhost:3000/api/dashboard/result/${electionId}`,
+        const result = await axios.get(`https://evote-xuw7.onrender.com/api/dashboard/result/${electionId}`,
           {headers:{
             "Authorization": `Bearer ${token}`
           }}

@@ -16,7 +16,7 @@ export function Candidates() {
 useEffect(() => {
   const getCandidates = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/dashboard/candidatelist/${electionId}`);
+      const response = await axios.get(`https://evote-xuw7.onrender.com/api/dashboard/candidatelist/${electionId}`);
       setCandidates(response.data.candidateList);
 
       const initialVotes = {};
@@ -35,7 +35,7 @@ useEffect(() => {
   const checkVoteStatus = async () => {
     const userId = localStorage.getItem("userId");
     try {
-      const response = await axios.post("http://localhost:3000/api/dashboard/voteStatus", { id: userId });
+      const response = await axios.post("https://evote-xuw7.onrender.com/api/dashboard/voteStatus", { id: userId });
       const userVoteData = response.data.userVote.voted || [];
 
       // Check if this electionId exists in user's voted elections
@@ -63,7 +63,7 @@ const handleClick = async (candidateId) => {
 
   try {
     // Update user's voted elections
-    await axios.post("http://localhost:3000/api/dashboard/updateVote", {
+    await axios.post("https://evote-xuw7.onrender.com/api/dashboard/updateVote", {
       id: localStorage.getItem("userId"),
       electionId: electionId,  // Pass electionId to backend
     });
@@ -72,7 +72,7 @@ const handleClick = async (candidateId) => {
   }
 
   try {
-    await axios.post("http://localhost:3000/api/dashboard/vote", {
+    await axios.post("https://evote-xuw7.onrender.com/api/dashboard/vote", {
       _id: candidateId,
       votes: 1,
     });
@@ -87,7 +87,7 @@ const handleClick = async (candidateId) => {
     if (!confirmDelete) return;
 
     try {
-      const delCandidate = await axios.delete(`http://localhost:3000/api/dashboard/deleteCandidate/${id}`);
+      const delCandidate = await axios.delete(`https://evote-xuw7.onrender.com/api/dashboard/deleteCandidate/${id}`);
       console.log(delCandidate.data.message);
       toast.success("Candidate deleted successfully!");
       setCandidates((prevCandidate) => prevCandidate.filter((candidate) => candidate._id !== id));

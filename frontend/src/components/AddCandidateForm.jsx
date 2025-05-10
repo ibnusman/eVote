@@ -50,7 +50,7 @@ console.log("Election ID from URL:", electionId);
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/dashboard/addcandidate",
+      "https://evote-xuw7.onrender.com/api/dashboard/addcandidate",
       finalFormData
     );
 

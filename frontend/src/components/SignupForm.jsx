@@ -40,7 +40,7 @@ export function SignupForm() {
     if (checkPasswordRules) {
         try {
             const response = await axios.post(
-                "http://localhost:3000/api/auth/register",
+                "https://evote-xuw7.onrender.com/api/auth/register",
                 formData,
                 {
                     headers: { "Content-Type": "application/json" },

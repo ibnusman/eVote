@@ -19,7 +19,7 @@ export function TwoFAForm() {
            setMessage("");
 
           try {
-            const response = await axios.post("http://localhost:3000/api/auth/2fa", formData); // Sending data as an object
+            const response = await axios.post("https://evote-xuw7.onrender.com/api/auth/2fa", formData); // Sending data as an object
             if(response.status === 200) {
                 setMessage(response.data.message)
                 

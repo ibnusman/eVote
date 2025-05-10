@@ -68,7 +68,7 @@ export const AddElection = ({ editData, onElectionSaved }) => {
       let response;
       if (isEditMode && editData?._id) {
         response = await axios.put(
-          `http://localhost:3000/api/dashboard/updateElection/${editData._id}`,
+          `https://evote-xuw7.onrender.com/api/dashboard/updateElection/${editData._id}`,
           formData,
           {
             headers: {
@@ -79,7 +79,7 @@ export const AddElection = ({ editData, onElectionSaved }) => {
         );
       } else {
         response = await axios.post(
-          "http://localhost:3000/api/dashboard/createElection",
+          "https://evote-xuw7.onrender.com/api/dashboard/createElection",
           formData,
           {
             headers: {

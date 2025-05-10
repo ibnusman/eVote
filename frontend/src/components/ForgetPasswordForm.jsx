@@ -17,7 +17,7 @@ export function ForgetPasswordForm() {
         setMessage(""); // Clear previous errors before making a request
 
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/forgetPassword', { email }); // Pass email as an object
+            const response = await axios.post('https://evote-xuw7.onrender.com/api/auth/forgetPassword', { email }); // Pass email as an object
             console.log(response.data);
             if(response.status===200)
             {
