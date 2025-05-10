@@ -24,7 +24,8 @@ export function LoginForm() {
 
         try {
             
-            const response = await axios.post('http://localhost:3000/api/auth/login', formData);
+            // const response = await axios.post('http://localhost:3000/api/auth/login', formData);
+            const response = await axios.post('https://evote-xuw7.onrender.com/api/auth/login', formData);
             if(response.status === 200)
             {
                 setMessage(response.data.message)
