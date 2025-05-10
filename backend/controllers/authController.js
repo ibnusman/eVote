@@ -109,45 +109,41 @@ const {emailOTP } = req.body;
 
 
 //Login 
-export const login = async (req,res) =>{
+export const login = async (req, res) => {
+  const { email, password } = req.body;
 
-const {email, password} = req.body;
-try {
+  try {
+    const user = await User.findOne({ email });
 
-const user = await User.findOne({email:email})
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
-if (!user){
- return res.status(400).json({message:"User not found"});
-}
- const isValidPassowrd = await bcrypt.compare(password, user.password);
-// console.log(isValidPassowrd)
-
-  
-
-if(!isValidPassowrd)
-{
-return res.status(200).json({message:"login Succfully "})
-}
- const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { userId: user._id, role: user.role },
-     process.env.JWT_SECRET, // 
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Send response with token
-    res.status(200).json({ message: "Login successful", token,user });
+    return res.status(200).json({
+      message: "Login successful",
+      token,
+      user,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    return res.status(500).json({
+      message: "Server Error",
+      error: error.message,
+    });
   }
-
 };
+
 
 //Forget Password
 
