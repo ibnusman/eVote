@@ -12,7 +12,7 @@ import Dashboard from './pages/Dashboard'
 import AddCandidate from './pages/AddCandidate'
 import { Candidates } from './components/Candidates'
 import ElectionResult from './components/ElectionResult'
-import { Download } from './components/download'
+import { Download } from './components/Download'
 import { ProtectedRoutes } from './components/ProtectedRoutes'
 
 
