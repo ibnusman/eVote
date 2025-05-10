@@ -17,7 +17,7 @@ export const ViewElection = () => {
   const fetchElection = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/dashboard/electionList",
+        "https://evote-xuw7.onrender.com/api/dashboard/electionList",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setElections(response.data.storedElections);
