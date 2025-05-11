@@ -11,7 +11,7 @@ const setupSwagger = (app) => {
     definition: {
       openapi: '3.0.0',  // OpenAPI version
       info: {
-        title: 'Voting System API',  // API title
+        title: 'Voting System APIs',  // API title
         version: '1.0.0',  // Version of the API
         description: 'API documentation for the Voting System',  // Description of the API
       },
