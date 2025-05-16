@@ -166,7 +166,7 @@ try{
   console.error("Error validating Email",error)
 }
 }
-//changing password
+//change password
 export const changePassword = async (req,res) =>{
   const {email,pass} = req.body;
 
