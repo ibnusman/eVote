@@ -12,7 +12,7 @@ import db from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 
-// Import the setupSwagger function
+// Import the setupSwagger functions
 import setupSwagger from './swagger.js';
 
 const port = process.env.PORT;
