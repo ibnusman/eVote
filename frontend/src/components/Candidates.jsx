@@ -38,7 +38,7 @@ useEffect(() => {
       const response = await axios.post("https://evote-xuw7.onrender.com/api/dashboard/voteStatus", { id: userId });
       const userVoteData = response.data.userVote.voted || [];
 
-      // Check if this electionId exists in user's voted elections
+      // Check this electionId exists in user's voted elections
       const hasVoted = userVoteData.some(vote => vote.electionId === electionId);
       setVoted(hasVoted);
       setNotVoted(!hasVoted);
