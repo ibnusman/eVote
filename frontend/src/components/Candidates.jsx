@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaVoteYea } from "react-icons/fa"; // Icon library - install it
+import { FaVoteYea } from "react-icons/fa"; // Icon library install it
 import { useParams } from 'react-router-dom';
 
 export function Candidates() {
