@@ -23,7 +23,7 @@ let transporter = nodemailer.createTransport({
     port: 587, // Use 587 for TLS (recommended) or 465 for SSL
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER, // Your email
+    user: process.env.EMAIL_USER, 
     pass: process.env.EMAIL_PASS, // App password
   },
 });
